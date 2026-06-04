@@ -1,0 +1,115 @@
+.product-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.4s, transform 0.4s;
+  overflow: hidden;
+  animation: fadeUp 0.6s ease both;
+}
+
+.product-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+
+/* Staggered animation delays */
+.product-card--anim-1 { animation-delay: 0.1s; }
+.product-card--anim-2 { animation-delay: 0.2s; }
+.product-card--anim-3 { animation-delay: 0.3s; }
+.product-card--anim-4 { animation-delay: 0.4s; }
+
+/* Image area */
+.product-card__img {
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Badge */
+.product-card__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 12px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.product-card__badge--new {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+.product-card__badge--promo {
+  background: #8B1A1A;
+  color: #FFD0D0;
+}
+
+/* Info */
+.product-card__info { padding: 20px; }
+
+.product-card__category {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.product-card__name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+/* Footer */
+.product-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-card__pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.product-card__price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--gold);
+}
+
+.product-card__price-old {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* Add button */
+.product-card__add-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--gold);
+  font-size: 20px;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.product-card__add-btn:hover {
+  background: var(--gold);
+  color: var(--dark);
+}

@@ -1,0 +1,69 @@
+/* ── Page hero header ── */
+.catalogue-page {
+  padding-top: 80px; /* navbar height */
+  min-height: 100vh;
+}
+
+.catalogue-page__hero {
+  text-align: center;
+  padding: 64px 48px 48px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(201,168,76,0.04), transparent);
+}
+
+.catalogue-page__hero-tag {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.catalogue-page__hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.catalogue-page__hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.catalogue-page__hero-line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+  margin: 20px auto 0;
+}
+
+/* ── Layout ── */
+.catalogue-page__layout {
+  display: flex;
+  gap: 40px;
+  padding: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* ── Main area ── */
+.catalogue-page__main { flex: 1; min-width: 0; }
+
+/* ── Product grid ── */
+.catalogue-page__grid--grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ── Product list ── */
+.catalogue-page__grid--list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

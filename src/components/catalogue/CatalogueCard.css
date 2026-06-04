@@ -1,0 +1,184 @@
+/* ── Base card ── */
+.cat-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  transition: border-color 0.35s, transform 0.35s;
+  animation: fadeUp 0.5s ease both;
+  overflow: hidden;
+}
+.cat-card:hover { border-color: var(--gold); }
+
+/* ── GRID mode ── */
+.cat-card--grid { cursor: pointer; }
+.cat-card--grid:hover { transform: translateY(-4px); }
+
+.cat-card--grid .cat-card__img {
+  height: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cat-card--grid .cat-card__info { padding: 18px; }
+
+/* ── LIST mode ── */
+.cat-card--list {
+  display: flex;
+  align-items: stretch;
+}
+
+.cat-card--list .cat-card__img {
+  width: 160px;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cat-card--list .cat-card__info {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+/* ── Badge ── */
+.cat-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  z-index: 2;
+}
+.cat-card__badge--new   { background: var(--gold); color: var(--dark); }
+.cat-card__badge--promo { background: #8B1A1A; color: #FFD0D0; }
+
+/* ── Overlay (grid only) ── */
+.cat-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 3;
+}
+.cat-card--grid:hover .cat-card__overlay { opacity: 1; }
+.cat-card--list .cat-card__overlay { display: none; }
+
+.cat-card__quick-btn {
+  padding: 10px 24px;
+  background: var(--gold);
+  color: var(--dark);
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cat-card__quick-btn:hover { background: var(--gold-light); }
+
+.cat-card__quick-icon {
+  background: transparent;
+  border: 1px solid rgba(240,234,214,0.3);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+.cat-card__quick-icon:hover { border-color: var(--gold); }
+
+/* ── Info ── */
+.cat-card__category {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.cat-card__name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+/* Sizes (list view) */
+.cat-card__sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.cat-card__size-tag {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+}
+
+/* ── Footer ── */
+.cat-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cat-card__pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.cat-card__price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--gold);
+}
+
+.cat-card__price-old {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.cat-card__add-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--gold);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cat-card__add-btn:hover { background: var(--gold); color: var(--dark); }

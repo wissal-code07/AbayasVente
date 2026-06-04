@@ -1,0 +1,116 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(13,13,13,0.95), rgba(13,13,13,0));
+  border-bottom: 1px solid transparent;
+  transition: all 0.4s ease;
+}
+
+.navbar--scrolled {
+  background: rgba(13, 13, 13, 0.97);
+  border-bottom-color: var(--border);
+}
+
+.navbar__logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.navbar__logo span {
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+}
+
+.navbar__links {
+  display: flex;
+  gap: 36px;
+}
+
+.navbar__link {
+  color: var(--text-muted);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+
+.navbar__link:hover { color: var(--gold); }
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar__icon {
+  color: var(--text-muted);
+  font-size: 18px;
+  padding: 4px;
+  transition: color var(--transition);
+  background: none;
+  border: none;
+}
+
+.navbar__icon:hover { color: var(--gold); }
+
+.navbar__cart {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--gold);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all var(--transition);
+}
+
+.navbar__cart:hover {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+.navbar__cart-count {
+  background: var(--gold);
+  color: var(--dark);
+  font-size: 10px;
+  font-weight: 500;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__logo {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.navbar__link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+}
+
+.navbar__link--active { color: var(--gold) !important; }

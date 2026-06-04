@@ -1,0 +1,53 @@
+/* ── Shared section styles (used by multiple sections) ── */
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-tag {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.section-line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 20px auto 0;
+  opacity: 0.4;
+}
+
+/* ── Featured section ── */
+.featured {
+  padding: 100px 48px;
+}
+
+.featured__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featured__more {
+  text-align: center;
+  margin-top: 48px;
+}

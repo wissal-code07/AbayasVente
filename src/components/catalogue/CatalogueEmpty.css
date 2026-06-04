@@ -1,0 +1,36 @@
+.cat-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.cat-empty__icon {
+  font-size: 48px;
+  color: var(--gold);
+  opacity: 0.3;
+  margin-bottom: 24px;
+}
+
+.cat-empty__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.cat-empty__desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.cat-empty__btn {
+  border: none;
+  cursor: pointer;
+}

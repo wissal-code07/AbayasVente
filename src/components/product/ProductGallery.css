@@ -1,0 +1,124 @@
+.gallery {
+  display: flex;
+  gap: 16px;
+  height: 580px;
+}
+
+/* ── Thumbnails ── */
+.gallery__thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 88px;
+  flex-shrink: 0;
+}
+
+.gallery__thumb {
+  width: 88px;
+  height: 110px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.25s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.gallery__thumb:hover { border-color: var(--text-muted); }
+
+.gallery__thumb--active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+/* ── Main image ── */
+.gallery__main {
+  flex: 1;
+  position: relative;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.gallery__main:hover { border-color: rgba(201,168,76,0.3); }
+
+/* ── Shared image background ── */
+.gallery__image-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery__thumb .gallery__image-bg {
+  height: 100%;
+}
+
+/* ── Badge ── */
+.gallery__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  padding: 5px 14px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.gallery__badge--new   { background: var(--gold); color: var(--dark); }
+.gallery__badge--promo { background: #8B1A1A; color: #FFD0D0; }
+
+/* ── Arrows ── */
+.gallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  background: rgba(13,13,13,0.7);
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 2;
+  opacity: 0;
+}
+
+.gallery__main:hover .gallery__arrow { opacity: 1; }
+.gallery__arrow:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+.gallery__arrow--prev { left: 12px; }
+.gallery__arrow--next { right: 12px; }
+
+/* ── Dots ── */
+.gallery__dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.gallery__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.gallery__dot--active {
+  background: var(--gold);
+  transform: scale(1.3);
+}
