@@ -1,0 +1,125 @@
+.promos-page { padding-top: 80px; min-height: 100vh; }
+
+.promos-page__hero {
+  text-align: center;
+  padding: 64px 48px 48px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(139,26,26,0.06), transparent);
+}
+
+.promos-page__tag {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #cc6666;
+  margin-bottom: 14px;
+}
+
+.promos-page__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.promos-page__title em { font-style: italic; color: var(--gold); }
+
+.promos-page__desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto 20px;
+  line-height: 1.8;
+}
+
+.promos-page__line {
+  width: 60px; height: 1px;
+  background: var(--gold); opacity: 0.4;
+  margin: 0 auto;
+}
+
+/* Stats */
+.promos-page__stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  padding: 32px 48px;
+  border-bottom: 1px solid var(--border);
+  background: var(--dark2);
+}
+
+.promos-page__stat { text-align: center; }
+
+.promos-page__stat-num {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: var(--gold);
+  font-weight: 300;
+  margin-bottom: 4px;
+}
+
+.promos-page__stat-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.promos-page__stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+}
+
+/* Countdown */
+.promos-page__countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 48px;
+  background: rgba(139,26,26,0.12);
+  border-bottom: 1px solid rgba(139,26,26,0.3);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #FFD0D0;
+}
+
+.promos-page__countdown-icon { font-size: 16px; }
+
+/* Content */
+.promos-page__content { padding: 48px; max-width: 1300px; margin: 0 auto; }
+
+.promos-page__count {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  letter-spacing: 1px;
+}
+
+.promos-page__count span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin-right: 4px;
+}
+
+.promos-page__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.promos-page__empty {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
