@@ -1,17 +1,15 @@
-.similar {
-  padding: 80px 48px;
-  border-top: 1px solid var(--border);
-}
+.similar { padding: 80px 48px; border-top: 1px solid var(--border); }
+.similar__header { text-align: center; margin-bottom: 48px; }
+.similar__grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
 
-.similar__header {
-  text-align: center;
-  margin-bottom: 48px;
+@media (max-width: 1024px) {
+  .similar { padding: 60px 32px; }
+  .similar__grid { grid-template-columns: repeat(2,1fr); }
 }
-
-.similar__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+@media (max-width: 768px) {
+  .similar { padding: 48px 24px; }
+}
+@media (max-width: 480px) {
+  .similar { padding: 40px 16px; }
+  .similar__grid { gap: 12px; }
 }

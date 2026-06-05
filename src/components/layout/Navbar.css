@@ -1,116 +1,120 @@
 .navbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
   padding: 20px 48px;
   background: linear-gradient(to bottom, rgba(13,13,13,0.95), rgba(13,13,13,0));
   border-bottom: 1px solid transparent;
   transition: all 0.4s ease;
+  height: var(--nav-height);
 }
-
 .navbar--scrolled {
-  background: rgba(13, 13, 13, 0.97);
+  background: rgba(13,13,13,0.97);
   border-bottom-color: var(--border);
 }
 
 .navbar__logo {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--gold);
+  font-size: 22px; font-weight: 600; letter-spacing: 2px;
+  color: var(--gold); background: none; border: none; cursor: pointer;
+  flex-shrink: 0;
 }
+.navbar__logo span { font-weight: 300; font-style: italic; color: var(--text); }
 
-.navbar__logo span {
-  font-weight: 300;
-  font-style: italic;
-  color: var(--text);
-}
-
-.navbar__links {
-  display: flex;
-  gap: 36px;
-}
-
+.navbar__links { display: flex; gap: 36px; }
 .navbar__link {
-  color: var(--text-muted);
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: color var(--transition);
+  color: var(--text-muted); font-size: 12px; letter-spacing: 2px;
+  text-transform: uppercase; transition: color var(--transition);
+  background: none; border: none; padding: 4px 0;
 }
+.navbar__link:hover, .navbar__link--active { color: var(--gold); }
 
-.navbar__link:hover { color: var(--gold); }
-
-.navbar__actions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
+.navbar__actions { display: flex; align-items: center; gap: 20px; }
 .navbar__icon {
-  color: var(--text-muted);
-  font-size: 18px;
-  padding: 4px;
-  transition: color var(--transition);
-  background: none;
-  border: none;
+  color: var(--text-muted); font-size: 18px; padding: 4px;
+  transition: color var(--transition); background: none; border: none;
 }
-
 .navbar__icon:hover { color: var(--gold); }
 
 .navbar__cart {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--gold);
-  font-family: 'Jost', sans-serif;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border: 1px solid var(--border);
+  background: transparent; color: var(--gold);
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase;
   transition: all var(--transition);
 }
-
-.navbar__cart:hover {
-  background: var(--gold);
-  color: var(--dark);
-}
+.navbar__cart:hover { background: var(--gold); color: var(--dark); }
 
 .navbar__cart-count {
-  background: var(--gold);
-  color: var(--dark);
-  font-size: 10px;
-  font-weight: 500;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--gold); color: var(--dark);
+  font-size: 10px; font-weight: 500;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
 }
 
-.navbar__logo {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--gold);
+/* ── Hamburger (mobile) ── */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  background: none; border: none; padding: 4px; cursor: pointer;
+}
+.navbar__hamburger span {
+  display: block; width: 24px; height: 1px;
+  background: var(--text); transition: all 0.3s;
+}
+.navbar__hamburger--open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.navbar__hamburger--open span:nth-child(2) { opacity: 0; }
+.navbar__hamburger--open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ── Mobile drawer ── */
+.navbar__drawer {
+  position: fixed; top: var(--nav-height); left: 0; right: 0; bottom: 0;
+  background: var(--dark2); z-index: 99;
+  display: flex; flex-direction: column;
+  padding: 32px 28px;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  border-top: 1px solid var(--border);
+  overflow-y: auto;
+}
+.navbar__drawer--open { transform: translateX(0); }
+
+.navbar__drawer-links { display: flex; flex-direction: column; gap: 4px; margin-bottom: 32px; }
+.navbar__drawer-link {
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  font-size: 20px; font-family: 'Cormorant Garamond', serif;
+  color: var(--text); background: none; border-left: none; border-right: none; border-top: none;
+  text-align: left; cursor: pointer; transition: color 0.2s;
+  letter-spacing: 1px;
+}
+.navbar__drawer-link:hover, .navbar__drawer-link--active { color: var(--gold); }
+
+.navbar__drawer-actions { display: flex; flex-direction: column; gap: 12px; }
+.navbar__drawer-cart {
+  padding: 16px; border: 1px solid var(--border); background: transparent;
+  color: var(--gold); font-family: 'Jost', sans-serif;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s; text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.navbar__drawer-cart:hover { background: var(--gold); color: var(--dark); }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .navbar { padding: 16px 32px; }
+  .navbar__links { gap: 24px; }
+  .navbar__link { font-size: 11px; }
 }
 
-.navbar__link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Jost', sans-serif;
+@media (max-width: 768px) {
+  .navbar { padding: 16px 24px; }
+  .navbar__links { display: none; }
+  .navbar__cart-label { display: none; }
+  .navbar__cart { padding: 8px 14px; }
+  .navbar__hamburger { display: flex; }
 }
 
-.navbar__link--active { color: var(--gold) !important; }
+@media (max-width: 480px) {
+  .navbar { padding: 14px 16px; }
+  .navbar__logo { font-size: 18px; }
+}

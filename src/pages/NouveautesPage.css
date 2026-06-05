@@ -1,89 +1,33 @@
-.nouveautes-page { padding-top: 80px; min-height: 100vh; }
-
-.nouveautes-page__hero {
-  text-align: center;
-  padding: 64px 48px 48px;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(to bottom, rgba(201,168,76,0.04), transparent);
-}
-
-.nouveautes-page__tag {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 14px;
-}
-
-.nouveautes-page__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 52px;
-  font-weight: 300;
-  color: var(--text);
-  line-height: 1.1;
-  margin-bottom: 16px;
-}
-
+.nouveautes-page { padding-top: var(--nav-height); min-height: 100vh; }
+.nouveautes-page__hero { text-align: center; padding: 64px 48px 48px; border-bottom: 1px solid var(--border); background: linear-gradient(to bottom, rgba(201,168,76,0.04), transparent); }
+.nouveautes-page__tag { display: block; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.nouveautes-page__title { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: var(--text); line-height: 1.1; margin-bottom: 16px; }
 .nouveautes-page__title em { font-style: italic; color: var(--gold); }
-
-.nouveautes-page__desc {
-  font-size: 14px;
-  color: var(--text-muted);
-  max-width: 480px;
-  margin: 0 auto 20px;
-  line-height: 1.8;
-}
-
-.nouveautes-page__line {
-  width: 60px; height: 1px;
-  background: var(--gold); opacity: 0.4;
-  margin: 0 auto;
-}
-
-/* Banner */
-.nouveautes-page__banner {
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  padding: 16px 48px;
-  background: rgba(201,168,76,0.05);
-  border-bottom: 1px solid var(--border);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-/* Content */
+.nouveautes-page__desc { font-size: 14px; color: var(--text-muted); max-width: 480px; margin: 0 auto 20px; line-height: 1.8; }
+.nouveautes-page__line { width: 60px; height: 1px; background: var(--gold); opacity: 0.4; margin: 0 auto; }
+.nouveautes-page__banner { display: flex; justify-content: center; gap: 48px; padding: 16px 48px; background: rgba(201,168,76,0.05); border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); flex-wrap: wrap; }
 .nouveautes-page__content { padding: 48px; max-width: 1300px; margin: 0 auto; }
+.nouveautes-page__count { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; letter-spacing: 1px; }
+.nouveautes-page__count span { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold); margin-right: 4px; }
+.nouveautes-page__grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+.nouveautes-page__empty { text-align: center; padding: 80px 24px; color: var(--text-muted); display: flex; flex-direction: column; gap: 24px; align-items: center; }
 
-.nouveautes-page__count {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-  letter-spacing: 1px;
+@media (max-width: 1024px) {
+  .nouveautes-page__hero { padding: 48px 32px 36px; }
+  .nouveautes-page__title { font-size: 40px; }
+  .nouveautes-page__content { padding: 36px 32px; }
+  .nouveautes-page__grid { grid-template-columns: repeat(3,1fr); }
 }
-
-.nouveautes-page__count span {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
-  color: var(--gold);
-  margin-right: 4px;
+@media (max-width: 768px) {
+  .nouveautes-page__hero { padding: 36px 24px 28px; }
+  .nouveautes-page__title { font-size: 32px; }
+  .nouveautes-page__banner { gap: 20px; padding: 14px 24px; font-size: 9px; }
+  .nouveautes-page__content { padding: 28px 24px; }
+  .nouveautes-page__grid { grid-template-columns: repeat(2,1fr); gap: 16px; }
 }
-
-.nouveautes-page__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-}
-
-.nouveautes-page__empty {
-  text-align: center;
-  padding: 80px 24px;
-  color: var(--text-muted);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: center;
+@media (max-width: 480px) {
+  .nouveautes-page__hero { padding: 28px 16px 24px; }
+  .nouveautes-page__title { font-size: 26px; }
+  .nouveautes-page__content { padding: 20px 16px; }
+  .nouveautes-page__grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
 }

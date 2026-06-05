@@ -1,162 +1,39 @@
-.cat-sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  padding-top: 8px;
-}
-
-.cat-sidebar__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 32px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.cat-sidebar__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: 1px;
-}
-
-.cat-sidebar__reset {
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--gold);
-  text-transform: uppercase;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
+.cat-sidebar { width: 240px; flex-shrink: 0; padding-top: 8px; }
+.cat-sidebar__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.cat-sidebar__title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--text); letter-spacing: 1px; }
+.cat-sidebar__reset { font-size: 10px; letter-spacing: 1px; color: var(--gold); text-transform: uppercase; background: none; border: none; cursor: pointer; transition: opacity 0.2s; }
 .cat-sidebar__reset:hover { opacity: 0.7; }
-
-/* ── Group ── */
-.cat-sidebar__group {
-  margin-bottom: 32px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid var(--border);
-}
-.cat-sidebar__group:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-}
-
-.cat-sidebar__group-title {
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-}
-
-/* ── Category list ── */
+.cat-sidebar__group { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.cat-sidebar__group:last-child { border-bottom: none; margin-bottom: 0; }
+.cat-sidebar__group-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
 .cat-sidebar__list { display: flex; flex-direction: column; gap: 4px; }
-
-.cat-sidebar__item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 8px 12px;
-  font-family: 'Jost', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--text-muted);
-  background: transparent;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s;
-}
+.cat-sidebar__item { display: block; width: 100%; text-align: left; padding: 8px 12px; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 300; color: var(--text-muted); background: transparent; border: 1px solid transparent; cursor: pointer; transition: all 0.2s; }
 .cat-sidebar__item:hover { color: var(--text); border-color: var(--border); }
-.cat-sidebar__item--active {
-  color: var(--gold);
-  border-color: var(--border);
-  background: rgba(201, 168, 76, 0.06);
-}
-
-/* ── Sizes ── */
-.cat-sidebar__sizes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.cat-sidebar__size {
-  width: 44px;
-  height: 36px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-muted);
-  font-family: 'Jost', sans-serif;
-  font-size: 11px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.cat-sidebar__item--active { color: var(--gold); border-color: var(--border); background: rgba(201,168,76,0.06); }
+.cat-sidebar__sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+.cat-sidebar__size { width: 44px; height: 36px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
 .cat-sidebar__size:hover { border-color: var(--gold); color: var(--text); }
-.cat-sidebar__size--active {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--dark);
-  font-weight: 500;
-}
-
-/* ── Colors ── */
+.cat-sidebar__size--active { background: var(--gold); border-color: var(--gold); color: var(--dark); font-weight: 500; }
 .cat-sidebar__colors { display: flex; flex-direction: column; gap: 10px; }
-
-.cat-sidebar__color {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 4px 8px;
-  border: 1px solid transparent;
-  transition: all 0.2s;
-}
+.cat-sidebar__color { display: flex; align-items: center; gap: 10px; background: transparent; cursor: pointer; padding: 4px 8px; border: 1px solid transparent; transition: all 0.2s; }
 .cat-sidebar__color:hover { border-color: var(--border); }
 .cat-sidebar__color--active { border-color: var(--gold); background: rgba(201,168,76,0.05); }
-
-.cat-sidebar__color-dot {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.15);
-  flex-shrink: 0;
-}
-
-.cat-sidebar__color-name {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--text-muted);
-}
+.cat-sidebar__color-dot { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
+.cat-sidebar__color-name { font-size: 13px; font-weight: 300; color: var(--text-muted); }
 .cat-sidebar__color--active .cat-sidebar__color-name { color: var(--text); }
+.cat-sidebar__price-label { font-size: 10px; color: var(--text-muted); font-family: 'Jost', sans-serif; font-weight: 300; letter-spacing: 0; text-transform: none; }
+.cat-sidebar__price-inputs { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.cat-sidebar__range { width: 100%; accent-color: var(--gold); cursor: pointer; }
 
-/* ── Price range ── */
-.cat-sidebar__price-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.cat-sidebar__price-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.cat-sidebar__range {
-  width: 100%;
-  accent-color: var(--gold);
-  cursor: pointer;
+/* Mobile: sidebar becomes a collapsible panel */
+@media (max-width: 768px) {
+  .cat-sidebar {
+    width: 100%;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .cat-sidebar__sizes { gap: 6px; }
+  .cat-sidebar__size { width: 40px; height: 32px; font-size: 10px; }
 }

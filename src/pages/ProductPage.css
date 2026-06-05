@@ -1,53 +1,23 @@
-.product-page {
-  padding-top: 80px;
-  min-height: 100vh;
-}
-
-/* ── Breadcrumb ── */
-.product-page__breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 20px 48px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(201,168,76,0.02);
-}
-
-.product-page__breadcrumb button {
-  background: none;
-  border: none;
-  font-family: 'Jost', sans-serif;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
+.product-page { padding-top: var(--nav-height); min-height: 100vh; }
+.product-page__breadcrumb { display: flex; align-items: center; gap: 8px; padding: 20px 48px; border-bottom: 1px solid var(--border); background: rgba(201,168,76,0.02); flex-wrap: wrap; }
+.product-page__breadcrumb button { background: none; border: none; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
 .product-page__breadcrumb button:hover { color: var(--gold); }
+.product-page__breadcrumb-sep { color: var(--border); font-size: 14px; }
+.product-page__breadcrumb-current { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+.product-page__layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; padding: 48px; max-width: 1300px; margin: 0 auto; align-items: start; }
+.product-page__gallery { position: sticky; top: calc(var(--nav-height) + 20px); }
 
-.product-page__breadcrumb-sep {
-  color: var(--border);
-  font-size: 14px;
+@media (max-width: 1024px) {
+  .product-page__layout { gap: 40px; padding: 36px 32px; }
+  .product-page__breadcrumb { padding: 16px 32px; }
 }
-
-.product-page__breadcrumb-current {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
+@media (max-width: 768px) {
+  .product-page__layout { grid-template-columns: 1fr; gap: 32px; padding: 24px; }
+  .product-page__gallery { position: static; }
+  .product-page__breadcrumb { padding: 14px 24px; }
 }
-
-/* ── Main layout ── */
-.product-page__layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  padding: 48px;
-  max-width: 1300px;
-  margin: 0 auto;
-  align-items: start;
+@media (max-width: 480px) {
+  .product-page__layout { padding: 16px; gap: 24px; }
+  .product-page__breadcrumb { padding: 12px 16px; gap: 6px; }
+  .product-page__breadcrumb button { font-size: 9px; }
 }
-
-.product-page__gallery { position: sticky; top: 100px; }

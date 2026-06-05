@@ -1,87 +1,48 @@
-.promos {
-  padding: 0 48px 100px;
-}
-
+.promos { padding: 0 48px 100px; }
 .promos__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px; max-width: 1200px; margin: 0 auto;
 }
-
 .promo-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  padding: 56px 48px;
-  background: var(--dark2);
-  transition: border-color var(--transition);
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border); padding: 56px 48px;
+  background: var(--dark2); transition: border-color var(--transition);
 }
-
 .promo-card:hover { border-color: var(--gold); }
-
 .promo-card__bg {
-  position: absolute;
-  top: 0; right: 0; bottom: 0;
-  width: 200px;
+  position: absolute; top: 0; right: 0; bottom: 0; width: 200px;
   opacity: 0.06;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--gold) 0, var(--gold) 1px,
-    transparent 0, transparent 8px
-  );
+  background: repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 8px);
   pointer-events: none;
 }
-
 .promo-card__percent {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 96px;
-  font-weight: 300;
-  line-height: 1;
-  color: var(--gold);
-  opacity: 0.15;
-  position: absolute;
-  top: 16px;
-  right: 24px;
-  pointer-events: none;
+  font-family: 'Cormorant Garamond', serif; font-size: 96px;
+  font-weight: 300; line-height: 1; color: var(--gold); opacity: 0.15;
+  position: absolute; top: 16px; right: 24px; pointer-events: none;
 }
-
-.promo-card__tag {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
-}
-
-.promo-card__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  font-weight: 300;
-  color: var(--text);
-  margin-bottom: 10px;
-  line-height: 1.2;
-}
-
-.promo-card__desc {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: 28px;
-  max-width: 280px;
-}
-
+.promo-card__tag { display: block; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.promo-card__title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--text); margin-bottom: 10px; line-height: 1.2; }
+.promo-card__desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; max-width: 280px; }
 .promo-card__deadline {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--gold);
-  text-transform: uppercase;
-  border: 1px solid var(--border);
-  padding: 8px 16px;
-  margin-bottom: 24px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 10px; letter-spacing: 2px; color: var(--gold);
+  text-transform: uppercase; border: 1px solid var(--border);
+  padding: 8px 16px; margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+  .promos { padding: 0 32px 72px; }
+  .promo-card { padding: 40px 36px; }
+  .promo-card__percent { font-size: 72px; }
+}
+@media (max-width: 768px) {
+  .promos { padding: 0 24px 56px; }
+  .promos__grid { grid-template-columns: 1fr; }
+  .promo-card { padding: 36px 28px; }
+}
+@media (max-width: 480px) {
+  .promos { padding: 0 16px 48px; }
+  .promo-card { padding: 28px 20px; }
+  .promo-card__title { font-size: 24px; }
+  .promo-card__percent { font-size: 56px; }
 }

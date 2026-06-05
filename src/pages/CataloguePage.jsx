@@ -8,9 +8,9 @@ import CatalogueEmpty from "../components/catalogue/CatalogueEmpty";
 import ActiveFilters from "../components/catalogue/ActiveFilters";
 import "./CataloguePage.css";
 
-// Reçoit onAddToCart ET navigate depuis App.jsx
 export default function CataloguePage({ onAddToCart, navigate }) {
-  const [viewMode, setViewMode] = useState("grid");
+  const [viewMode, setViewMode]       = useState("grid");
+  const [showFilters, setShowFilters] = useState(false); // mobile toggle
 
   const {
     selectedCategory, setSelectedCategory,
@@ -20,7 +20,6 @@ export default function CataloguePage({ onAddToCart, navigate }) {
     sortBy,           setSortBy,
     currentPage,      setCurrentPage,
     paginatedProducts,
-    filteredProducts,
     totalPages,
     totalCount,
     activeFilterCount,
@@ -29,29 +28,36 @@ export default function CataloguePage({ onAddToCart, navigate }) {
 
   return (
     <div className="catalogue-page">
-      {/* En-tête de page */}
       <div className="catalogue-page__hero">
         <span className="catalogue-page__hero-tag">Notre Boutique</span>
-        <h1 className="catalogue-page__hero-title">
-          La <em>Collection</em>
-        </h1>
+        <h1 className="catalogue-page__hero-title">La <em>Collection</em></h1>
         <div className="catalogue-page__hero-line" />
       </div>
 
-      {/* Layout : sidebar + contenu principal */}
       <div className="catalogue-page__layout">
-        <CatalogueSidebar
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          selectedSizes={selectedSizes}
-          toggleSize={toggleSize}
-          selectedColors={selectedColors}
-          toggleColor={toggleColor}
-          priceRange={priceRange}
-          setPriceRange={setPriceRange}
-          activeFilterCount={activeFilterCount}
-          resetFilters={resetFilters}
-        />
+        {/* Mobile filter toggle button */}
+        <button
+          className="catalogue-page__filter-toggle"
+          onClick={() => setShowFilters((v) => !v)}
+        >
+          {showFilters ? "✕ Masquer les filtres" : `⚙ Filtres${activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}`}
+        </button>
+
+        {/* Sidebar — always visible on desktop, toggleable on mobile */}
+        {(showFilters || window.innerWidth > 768) && (
+          <CatalogueSidebar
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            selectedSizes={selectedSizes}
+            toggleSize={toggleSize}
+            selectedColors={selectedColors}
+            toggleColor={toggleColor}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            activeFilterCount={activeFilterCount}
+            resetFilters={resetFilters}
+          />
+        )}
 
         <div className="catalogue-page__main">
           <CatalogueTopBar
@@ -61,7 +67,6 @@ export default function CataloguePage({ onAddToCart, navigate }) {
             viewMode={viewMode}
             setViewMode={setViewMode}
           />
-
           <ActiveFilters
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
@@ -72,7 +77,6 @@ export default function CataloguePage({ onAddToCart, navigate }) {
             activeFilterCount={activeFilterCount}
             resetFilters={resetFilters}
           />
-
           {paginatedProducts.length === 0 ? (
             <CatalogueEmpty resetFilters={resetFilters} />
           ) : (
@@ -88,7 +92,6 @@ export default function CataloguePage({ onAddToCart, navigate }) {
               ))}
             </div>
           )}
-
           <CataloguePagination
             currentPage={currentPage}
             totalPages={totalPages}
