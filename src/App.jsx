@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage";
 import AccountPage from "./pages/AccountPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import CartSidebar from "./components/cart/CartSidebar";
+import AdminPage from "./pages/AdminPage";
 import "./styles/globals.css";
 
 export default function App() {
@@ -77,13 +78,14 @@ export default function App() {
       case "about":       return <AboutPage       navigate={navigate} />;
       case "account":     return <AccountPage     navigate={navigate} />;
       case "checkout":    return <CheckoutPage    cart={cart} navigate={navigate} />;
+      case "admin":       return <AdminPage       navigate={navigate} />;
       case "home":
       default:            return <HomePage        onAddToCart={handleAddToCart} navigate={navigate} />;
     }
   };
 
   // Checkout et auth ont leur propre layout sans Navbar/Footer
-  const isFullPage = page === "checkout";
+  const isFullPage = page === "checkout" || page === "admin"; // Admin aussi pour le moment, à revoir si on ajoute d'autres pages admin
 
   if (isFullPage) {
     return renderPage();

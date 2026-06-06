@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: "Nouveautés",  page: "nouveautes" },
   { label: "Promotions",  page: "promotions" },
   { label: "À propos",    page: "about"      },
+  { label: "Admin",       page: "admin"      },   // 👈 Bouton admin ajouté
 ];
 
 const IS_LOGGED_IN = true; // sera remplacé par vrai état auth
@@ -56,7 +57,11 @@ export default function Navbar({ cartCount = 0, navigate, currentPage, onCartOpe
       <div className={`navbar__drawer ${drawerOpen ? "navbar__drawer--open" : ""}`}>
         <div className="navbar__drawer-links">
           {NAV_LINKS.map((link) => (
-            <button key={link.label} className={`navbar__drawer-link ${currentPage === link.page ? "navbar__drawer-link--active" : ""}`} onClick={() => handleNavigate(link.page)}>{link.label}</button>
+            <button
+              key={link.label}
+              className={`navbar__drawer-link ${currentPage === link.page ? "navbar__drawer-link--active" : ""}`}
+              onClick={() => handleNavigate(link.page)}
+            >{link.label}</button>
           ))}
         </div>
         <div className="navbar__drawer-actions">
