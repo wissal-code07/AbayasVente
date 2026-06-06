@@ -1,0 +1,146 @@
+/* ── Shared section styles ── */
+.checkout-section__title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+
+.checkout-section__num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.checkout-section__next-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--dark);
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.25s;
+  margin-top: 28px;
+  text-align: center;
+}
+.checkout-section__next-btn:hover { background: var(--gold-light); }
+
+/* ── Address tabs ── */
+.checkout-address__tabs {
+  display: flex;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.checkout-address__tab {
+  flex: 1;
+  padding: 12px;
+  background: transparent;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checkout-address__tab--active {
+  background: rgba(201,168,76,0.08);
+  color: var(--gold);
+  border-bottom: 2px solid var(--gold);
+}
+
+/* ── Saved address cards ── */
+.checkout-address__saved {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkout-address__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.checkout-address__card--selected { border-color: var(--gold); background: rgba(201,168,76,0.04); }
+.checkout-address__card:hover { border-color: rgba(201,168,76,0.4); }
+
+.checkout-address__radio { accent-color: var(--gold); margin-top: 4px; flex-shrink: 0; }
+
+.checkout-address__card-content { flex: 1; }
+
+.checkout-address__card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.checkout-address__card-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.checkout-address__default {
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+  padding: 2px 8px;
+  border: 1px solid rgba(201,168,76,0.3);
+}
+
+.checkout-address__card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.checkout-address__card-text { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+/* ── New address form ── */
+.checkout-address__form { display: flex; flex-direction: column; gap: 16px; }
+.checkout-address__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.checkout-address__field { display: flex; flex-direction: column; gap: 8px; }
+.checkout-address__field.error .checkout-address__input { border-color: #cc4444; }
+.checkout-address__label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+.checkout-address__input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: 'Jost', sans-serif; font-size: 14px; padding: 12px 16px; outline: none; transition: border-color 0.2s; width: 100%; font-weight: 300; }
+.checkout-address__input:focus { border-color: var(--gold); }
+.checkout-address__select { cursor: pointer; }
+.checkout-address__select option { background: var(--dark3); }
+.checkout-address__error { font-size: 11px; color: #cc6666; }
+
+@media (max-width: 480px) {
+  .checkout-address__row { grid-template-columns: 1fr; }
+}

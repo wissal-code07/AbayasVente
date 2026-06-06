@@ -1,0 +1,84 @@
+.checkout-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.checkout-progress__item {
+  display: flex;
+  align-items: center;
+}
+
+.checkout-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: default;
+  padding: 0 8px;
+  transition: opacity 0.2s;
+}
+
+.checkout-progress__step[disabled] { opacity: 0.5; }
+.checkout-progress__step:not([disabled]) { cursor: pointer; }
+
+.checkout-progress__num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+
+.checkout-progress__step--current .checkout-progress__num {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.checkout-progress__step--completed .checkout-progress__num {
+  border-color: var(--gold);
+  background: transparent;
+  color: var(--gold);
+}
+
+.checkout-progress__label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+
+.checkout-progress__step--current .checkout-progress__label { color: var(--gold); }
+.checkout-progress__step--completed .checkout-progress__label { color: var(--text); }
+
+.checkout-progress__line {
+  width: 80px;
+  height: 1px;
+  background: var(--border);
+  margin: 0 4px;
+  margin-bottom: 28px;
+  transition: background 0.3s;
+}
+
+.checkout-progress__line--done { background: var(--gold); opacity: 0.5; }
+
+@media (max-width: 480px) {
+  .checkout-progress__line { width: 40px; }
+  .checkout-progress__label { font-size: 9px; letter-spacing: 1px; }
+  .checkout-progress__num { width: 34px; height: 34px; font-size: 14px; }
+}

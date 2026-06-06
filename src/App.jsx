@@ -8,6 +8,8 @@ import AuthPage from "./pages/AuthPage";
 import NouveautesPage from "./pages/NouveautesPage";
 import PromotionsPage from "./pages/PromotionsPage";
 import AboutPage from "./pages/AboutPage";
+import AccountPage from "./pages/AccountPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import CartSidebar from "./components/cart/CartSidebar";
 import "./styles/globals.css";
 
@@ -18,7 +20,6 @@ export default function App() {
   const [cart, setCart]                     = useState([]);
   const [cartOpen, setCartOpen]             = useState(false);
 
-  // ── Panier ──
   const handleAddToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find(
@@ -54,13 +55,14 @@ export default function App() {
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  // ── Navigation ──
   const navigate = (destination, data = null) => {
-    if (destination === "login")    { setAuthTab("login");    setPage("auth"); }
+    if (destination === "login")         { setAuthTab("login");    setPage("auth"); }
     else if (destination === "register") { setAuthTab("register"); setPage("auth"); }
     else {
       setPage(destination);
       if (destination === "product" && data) setCurrentProduct(data);
+      // Ferme le panier si on va au checkout
+      if (destination === "checkout") setCartOpen(false);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -73,10 +75,19 @@ export default function App() {
       case "nouveautes":  return <NouveautesPage  onAddToCart={handleAddToCart} navigate={navigate} />;
       case "promotions":  return <PromotionsPage  onAddToCart={handleAddToCart} navigate={navigate} />;
       case "about":       return <AboutPage       navigate={navigate} />;
+      case "account":     return <AccountPage     navigate={navigate} />;
+      case "checkout":    return <CheckoutPage    cart={cart} navigate={navigate} />;
       case "home":
       default:            return <HomePage        onAddToCart={handleAddToCart} navigate={navigate} />;
     }
   };
+
+  // Checkout et auth ont leur propre layout sans Navbar/Footer
+  const isFullPage = page === "checkout";
+
+  if (isFullPage) {
+    return renderPage();
+  }
 
   return (
     <>

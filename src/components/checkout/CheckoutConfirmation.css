@@ -1,0 +1,179 @@
+.checkout-confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 32px;
+  max-width: 680px;
+  margin: 0 auto;
+  animation: fadeUp 0.6s ease both;
+}
+
+.checkout-confirmation__icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--dark);
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.checkout-confirmation__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+.checkout-confirmation__title em { font-style: italic; color: var(--gold); }
+
+.checkout-confirmation__subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 420px;
+}
+
+/* ── Order number ── */
+.checkout-confirmation__order-num {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 48px;
+  border: 1px solid var(--gold);
+  background: rgba(201,168,76,0.06);
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.checkout-confirmation__order-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.checkout-confirmation__order-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: var(--gold);
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* ── Details grid ── */
+.checkout-confirmation__details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.checkout-confirmation__detail-block {
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  padding: 20px;
+}
+
+.checkout-confirmation__detail-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.checkout-confirmation__detail-content p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.checkout-confirmation__detail-sub {
+  color: var(--text-muted) !important;
+  font-size: 11px !important;
+}
+
+.checkout-confirmation__total {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 24px !important;
+  color: var(--gold) !important;
+}
+
+/* ── Items ── */
+.checkout-confirmation__items {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.checkout-confirmation__items-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.checkout-confirmation__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.checkout-confirmation__item:last-child { border-bottom: none; }
+
+.checkout-confirmation__item-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--text);
+  flex: 1;
+}
+
+.checkout-confirmation__item-opts {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.checkout-confirmation__item-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ── Actions ── */
+.checkout-confirmation__actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .checkout-confirmation { padding: 32px 20px; }
+  .checkout-confirmation__title { font-size: 32px; }
+  .checkout-confirmation__details { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .checkout-confirmation__title { font-size: 26px; }
+  .checkout-confirmation__order-num { padding: 16px 24px; }
+  .checkout-confirmation__actions { flex-direction: column; width: 100%; }
+  .checkout-confirmation__actions .btn { width: 100%; text-align: center; }
+}

@@ -9,6 +9,8 @@ const NAV_LINKS = [
   { label: "À propos",    page: "about"      },
 ];
 
+const IS_LOGGED_IN = true; // sera remplacé par vrai état auth
+
 export default function Navbar({ cartCount = 0, navigate, currentPage, onCartOpen }) {
   const [scrolled, setScrolled]     = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -20,11 +22,8 @@ export default function Navbar({ cartCount = 0, navigate, currentPage, onCartOpe
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Ferme le drawer quand on navigue
-  const handleNavigate = (page) => {
-    setDrawerOpen(false);
-    navigate(page);
-  };
+  const handleNavigate = (page) => { setDrawerOpen(false); navigate(page); };
+  const handleAccountClick = () => handleNavigate(IS_LOGGED_IN ? "account" : "login");
 
   return (
     <>
@@ -32,62 +31,40 @@ export default function Navbar({ cartCount = 0, navigate, currentPage, onCartOpe
         <button className="navbar__logo" onClick={() => handleNavigate("home")}>
           Abayas<span>Vente</span>
         </button>
-
-        {/* Desktop links */}
         <ul className="navbar__links">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
               <button
                 className={`navbar__link ${currentPage === link.page ? "navbar__link--active" : ""}`}
                 onClick={() => handleNavigate(link.page)}
-              >
-                {link.label}
-              </button>
+              >{link.label}</button>
             </li>
           ))}
         </ul>
-
-        {/* Desktop actions */}
         <div className="navbar__actions">
-          <button className="navbar__icon" aria-label="Rechercher" onClick={() => setSearchOpen(true)}>🔍</button>
-          <button className="navbar__icon" aria-label="Mon compte" onClick={() => handleNavigate("login")}>👤</button>
+          <button className="navbar__icon" onClick={() => setSearchOpen(true)}>🔍</button>
+          <button className={`navbar__icon ${currentPage === "account" ? "navbar__icon--active" : ""}`} onClick={handleAccountClick}>👤</button>
           <button className="navbar__cart" onClick={onCartOpen}>
             🛒 <span className="navbar__cart-label">Panier</span>
             {cartCount > 0 && <span className="navbar__cart-count">{cartCount}</span>}
           </button>
-          {/* Hamburger */}
-          <button
-            className={`navbar__hamburger ${drawerOpen ? "navbar__hamburger--open" : ""}`}
-            onClick={() => setDrawerOpen((v) => !v)}
-            aria-label="Menu"
-          >
+          <button className={`navbar__hamburger ${drawerOpen ? "navbar__hamburger--open" : ""}`} onClick={() => setDrawerOpen(v => !v)}>
             <span /><span /><span />
           </button>
         </div>
       </nav>
-
-      {/* Mobile drawer */}
       <div className={`navbar__drawer ${drawerOpen ? "navbar__drawer--open" : ""}`}>
         <div className="navbar__drawer-links">
           {NAV_LINKS.map((link) => (
-            <button
-              key={link.label}
-              className={`navbar__drawer-link ${currentPage === link.page ? "navbar__drawer-link--active" : ""}`}
-              onClick={() => handleNavigate(link.page)}
-            >
-              {link.label}
-            </button>
+            <button key={link.label} className={`navbar__drawer-link ${currentPage === link.page ? "navbar__drawer-link--active" : ""}`} onClick={() => handleNavigate(link.page)}>{link.label}</button>
           ))}
         </div>
         <div className="navbar__drawer-actions">
-          <button className="navbar__drawer-link" onClick={() => handleNavigate("login")}>👤 Mon compte</button>
+          <button className="navbar__drawer-link" onClick={handleAccountClick}>👤 {IS_LOGGED_IN ? "Mon compte" : "Se connecter"}</button>
           <button className="navbar__drawer-link" onClick={() => { setDrawerOpen(false); setSearchOpen(true); }}>🔍 Rechercher</button>
-          <button className="navbar__drawer-cart" onClick={() => { setDrawerOpen(false); onCartOpen(); }}>
-            🛒 Panier {cartCount > 0 && <span className="navbar__cart-count">{cartCount}</span>}
-          </button>
+          <button className="navbar__drawer-cart" onClick={() => { setDrawerOpen(false); onCartOpen(); }}>🛒 Panier {cartCount > 0 && <span className="navbar__cart-count">{cartCount}</span>}</button>
         </div>
       </div>
-
       <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} navigate={navigate} />
     </>
   );

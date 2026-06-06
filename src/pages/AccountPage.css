@@ -1,0 +1,77 @@
+.account-page {
+  padding-top: var(--nav-height);
+  min-height: 100vh;
+}
+
+/* ── Hero ── */
+.account-page__hero {
+  text-align: center;
+  padding: 52px 48px 40px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(201,168,76,0.04), transparent);
+}
+
+.account-page__tag {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.account-page__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.account-page__title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.account-page__line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+  margin: 18px auto 0;
+}
+
+/* ── Layout ── */
+.account-page__layout {
+  display: flex;
+  gap: 40px;
+  padding: 48px;
+  max-width: 1300px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.account-page__content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .account-page__layout { padding: 36px 32px; gap: 28px; }
+  .account-page__hero { padding: 40px 32px 32px; }
+  .account-page__title { font-size: 38px; }
+}
+
+@media (max-width: 768px) {
+  .account-page__layout { flex-direction: column; padding: 0; gap: 0; }
+  .account-page__hero { padding: 32px 24px 28px; }
+  .account-page__title { font-size: 32px; }
+  .account-page__content { padding: 24px; width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .account-page__hero { padding: 24px 16px 20px; }
+  .account-page__title { font-size: 26px; }
+  .account-page__content { padding: 16px; }
+}

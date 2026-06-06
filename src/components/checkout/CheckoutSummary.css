@@ -1,0 +1,125 @@
+.checkout-summary {
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  position: sticky;
+  top: calc(var(--nav-height) + 24px);
+}
+
+.checkout-summary__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.5px;
+}
+
+/* ── Items ── */
+.checkout-summary__items {
+  display: flex;
+  flex-direction: column;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.checkout-summary__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.checkout-summary__item-thumb {
+  width: 52px;
+  height: 64px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.checkout-summary__item-info { flex: 1; min-width: 0; }
+
+.checkout-summary__item-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.checkout-summary__item-opts,
+.checkout-summary__item-qty {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.checkout-summary__item-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Totals ── */
+.checkout-summary__totals { padding: 16px 24px; }
+
+.checkout-summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.checkout-summary__row--total {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 0;
+  font-weight: 300;
+}
+
+.checkout-summary__row--total span:last-child { color: var(--gold); }
+
+.checkout-summary__free { color: #44aa66 !important; }
+
+.checkout-summary__delivery-mode {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.checkout-summary__divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 0;
+}
+
+/* ── Badges ── */
+.checkout-summary__badges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  background: rgba(201,168,76,0.02);
+}
+
+.checkout-summary__badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 1024px) {
+  .checkout-summary { position: static; }
+}

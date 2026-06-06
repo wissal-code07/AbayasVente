@@ -1,0 +1,174 @@
+.account-dashboard { display: flex; flex-direction: column; gap: 32px; }
+
+/* ── Welcome ── */
+.account-dashboard__welcome {
+  padding: 32px 36px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+  border: 1px solid var(--border);
+}
+
+.account-dashboard__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.account-dashboard__title em { font-style: italic; color: var(--gold); }
+
+.account-dashboard__subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ── Stats ── */
+.account-dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.account-dashboard__stat {
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.25s;
+}
+.account-dashboard__stat:hover { border-color: var(--gold); }
+
+.account-dashboard__stat-icon {
+  font-size: 18px;
+  color: var(--gold);
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+.account-dashboard__stat-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: var(--gold);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.account-dashboard__stat-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 400;
+}
+
+.account-dashboard__stat-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ── Section ── */
+.account-dashboard__section {
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  overflow: hidden;
+}
+
+.account-dashboard__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.account-dashboard__section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.account-dashboard__see-all {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.account-dashboard__see-all:hover { opacity: 0.7; }
+
+/* ── Order rows ── */
+.account-dashboard__orders { display: flex; flex-direction: column; }
+
+.account-dashboard__order {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.account-dashboard__order:last-child { border-bottom: none; }
+.account-dashboard__order:hover { background: rgba(201,168,76,0.02); }
+
+.account-dashboard__order-left { display: flex; flex-direction: column; gap: 3px; }
+
+.account-dashboard__order-id {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.account-dashboard__order-date,
+.account-dashboard__order-items {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.account-dashboard__order-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.account-dashboard__order-status {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid;
+  background: transparent;
+}
+
+.account-dashboard__order-total {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .account-dashboard__stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .account-dashboard__welcome { padding: 24px 20px; }
+  .account-dashboard__title { font-size: 28px; }
+  .account-dashboard__order { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .account-dashboard__order-right { width: 100%; justify-content: space-between; }
+}
+@media (max-width: 480px) {
+  .account-dashboard__stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .account-dashboard__stat { padding: 16px 14px; }
+  .account-dashboard__stat-value { font-size: 20px; }
+  .account-dashboard__section-header { padding: 16px 16px; }
+  .account-dashboard__order { padding: 14px 16px; }
+}
