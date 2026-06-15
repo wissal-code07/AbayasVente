@@ -1,87 +1,107 @@
 import { useState } from "react";
-import AbayaSilhouette from "../ui/AbayaSilhouette";
 import "./ProductGallery.css";
-
-// Génère plusieurs variantes de la même silhouette pour simuler une galerie
-function GalleryImage({ product, variant = 0 }) {
-  const variants = [
-    { gradFrom: product.gradFrom, gradTo: product.gradTo, accent: product.accent },
-    { gradFrom: product.gradTo,   gradTo: product.gradFrom, accent: product.accent },
-    { gradFrom: "#1A1614",        gradTo: "#0D0C0A",        accent: "rgba(201,168,76,0.5)" },
-    { gradFrom: "#141418",        gradTo: "#0A0A0E",        accent: "rgba(180,160,120,0.3)" },
-  ];
-  const v = variants[variant % variants.length];
-  return (
-    <div
-      className="gallery__image-bg"
-      style={{ background: `linear-gradient(160deg, ${v.gradFrom}, ${v.gradTo})` }}
-    >
-      <AbayaSilhouette
-        id={`${product.id}-${variant}`}
-        gradientFrom={v.gradFrom}
-        gradientTo={v.gradTo}
-        accentColor={v.accent}
-      />
-    </div>
-  );
-}
 
 export default function ProductGallery({ product }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const TOTAL_IMAGES = 4;
+
+  const images    = product.images || [];
+  const hasImages = images.length > 0;
+
+  // ✅ Correction : activeImage (pas imageActive)
+  const activeImage = hasImages ? images[activeIndex] : null;
 
   return (
     <div className="gallery">
+
       {/* Thumbnails — colonne gauche */}
       <div className="gallery__thumbs">
-        {Array.from({ length: TOTAL_IMAGES }).map((_, i) => (
-          <button
-            key={i}
-            className={`gallery__thumb ${activeIndex === i ? "gallery__thumb--active" : ""}`}
-            onClick={() => setActiveIndex(i)}
-            aria-label={`Photo ${i + 1}`}
-          >
-            <GalleryImage product={product} variant={i} />
-          </button>
-        ))}
-      </div>
-
-      {/* Main image */}
-      <div className="gallery__main">
-        {product.badge && (
-          <span className={`gallery__badge gallery__badge--${product.badge}`}>
-            {product.badge === "new" ? "Nouveau" : product.badgeLabel}
-          </span>
-        )}
-        <GalleryImage product={product} variant={activeIndex} />
-
-        {/* Navigation arrows */}
-        <button
-          className="gallery__arrow gallery__arrow--prev"
-          onClick={() => setActiveIndex((i) => (i - 1 + TOTAL_IMAGES) % TOTAL_IMAGES)}
-          aria-label="Image précédente"
-        >
-          ←
-        </button>
-        <button
-          className="gallery__arrow gallery__arrow--next"
-          onClick={() => setActiveIndex((i) => (i + 1) % TOTAL_IMAGES)}
-          aria-label="Image suivante"
-        >
-          →
-        </button>
-
-        {/* Dots indicator */}
-        <div className="gallery__dots">
-          {Array.from({ length: TOTAL_IMAGES }).map((_, i) => (
+        {hasImages ? (
+          images.map((img, i) => (
             <button
-              key={i}
-              className={`gallery__dot ${activeIndex === i ? "gallery__dot--active" : ""}`}
+              key={img.id || i}
+              // ✅ className (pas classeName), template literal correct
+              className={`gallery__thumb ${activeIndex === i ? "gallery__thumb--active" : ""}`}
               onClick={() => setActiveIndex(i)}
               aria-label={`Photo ${i + 1}`}
-            />
-          ))}
-        </div>
+            >
+              <img
+                src={img.image}
+                alt={`${product.name} ${i + 1}`}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </button>
+          ))
+        ) : (
+          // Placeholder thumbnails si pas d'images
+          Array.from({ length: 3 }).map((_, i) => (
+            <button
+              key={i}
+              // ✅ className (pas classeName), onClick (pas inClick)
+              className={`gallery__thumb ${activeIndex === i ? "gallery__thumb--active" : ""}`}
+              onClick={() => setActiveIndex(i)}
+            >
+              <div className="gallery__thumb-placeholder" />
+            </button>
+          ))
+        )}
+      </div>
+
+      {/* Image principale */}
+      <div className="gallery__main">
+
+        {/* Badge */}
+        {product.badge && (
+          <span className={`gallery__badge gallery__badge--${product.badge}`}>
+            {/* ✅ template literal correct */}
+            {product.badge === "new" ? "Nouveau" : `-${product.discount_percent}%`}
+          </span>
+        )}
+
+        {/* Image ou placeholder */}
+        {hasImages && activeImage ? (
+          <img
+            src={activeImage.image}
+            alt={product.name}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          // ✅ className (pas classeName)
+          <div className="gallery__placeholder">
+            <span className="gallery__placeholder-icon">✦</span>
+            <p className="gallery__placeholder-text">Aucune image disponible</p>
+          </div>
+        )}
+
+        {/* Flèches navigation */}
+        {hasImages && images.length > 1 && (
+          <>
+            <button
+              className="gallery__arrow gallery__arrow--prev"
+              onClick={() => setActiveIndex((i) => (i - 1 + images.length) % images.length)}
+              aria-label="Image précédente"
+            >←</button>
+            <button
+              className="gallery__arrow gallery__arrow--next"
+              onClick={() => setActiveIndex((i) => (i + 1) % images.length)}
+              aria-label="Image suivante"
+            >→</button>
+          </>
+        )}
+
+        {/* Points indicateurs */}
+        {hasImages && images.length > 1 && (
+          <div className="gallery__dots">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                className={`gallery__dot ${activeIndex === i ? "gallery__dot--active" : ""}`}
+                onClick={() => setActiveIndex(i)}
+                aria-label={`Photo ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import "./CheckoutConfirmation.css";
 export default function CheckoutConfirmation({ orderData, navigate }) {
   const formatPrice = (p) => new Intl.NumberFormat("fr-DZ").format(p) + " DA";
 
-  const orderNumber = `CMD-2025-${Math.floor(Math.random() * 9000) + 1000}`;
+  const orderNumber = orderData.orderNumber || `CMD-${Math.floor(Math.random() * 9000) + 1000}`;
   const total = orderData.cart.reduce((s, i) => s + i.price * i.quantity, 0)
               + (orderData.deliveryOption?.price || 0);
 

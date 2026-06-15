@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { login } from "../../services/authService";
 import "./AuthForms.css";
 
-export default function LoginForm({ onSwitchTab, navigate }) {
-  const [form, setForm] = useState({ email: "", password: "", remember: false });
+export default function LoginForm({ onSwitchTab, navigate, onLoginSuccess }) {
+  const [form, setForm]             = useState({ email: "", password: "", remember: false });
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [errors, setErrors]         = useState({});
+  const [loading, setLoading]       = useState(false);
+  const [apiError, setApiError]     = useState("");
 
   const validate = () => {
     const e = {};
@@ -15,16 +17,21 @@ export default function LoginForm({ onSwitchTab, navigate }) {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
-    // Mock login — sera remplacé par l'appel API Django
-    setTimeout(() => {
+    setApiError("");
+    try {
+      const user = await login(form.email, form.password);
+      onLoginSuccess(user);
+      navigate(user.isStaff ? "admin" : "account");
+    } catch (err) {
+      setApiError(err.response?.data?.detail || "Email ou mot de passe incorrect.");
+    } finally {
       setLoading(false);
-      navigate("home");
-    }, 1200);
+    }
   };
 
   const set = (field) => (e) => {
@@ -35,86 +42,45 @@ export default function LoginForm({ onSwitchTab, navigate }) {
 
   return (
     <form className="auth-form" onSubmit={handleSubmit} noValidate>
-      {/* Google */}
       <button type="button" className="auth-form__google">
         <span className="auth-form__google-icon">G</span>
         Continuer avec Google
       </button>
-
       <div className="auth-form__divider"><span>ou</span></div>
 
-      {/* Email */}
+      {apiError && <div className="auth-form__api-error">{apiError}</div>}
+
       <div className={`auth-form__field ${errors.email ? "auth-form__field--error" : ""}`}>
         <label className="auth-form__label">Adresse email</label>
-        <input
-          className="auth-form__input"
-          type="email"
-          placeholder="votre@email.com"
-          value={form.email}
-          onChange={set("email")}
-          autoComplete="email"
-        />
+        <input className="auth-form__input" type="email" placeholder="votre@email.com" value={form.email} onChange={set("email")} autoComplete="email" />
         {errors.email && <p className="auth-form__error">{errors.email}</p>}
       </div>
 
-      {/* Mot de passe */}
       <div className={`auth-form__field ${errors.password ? "auth-form__field--error" : ""}`}>
         <div className="auth-form__label-row">
           <label className="auth-form__label">Mot de passe</label>
-          <button
-            type="button"
-            className="auth-form__forgot"
-            onClick={() => navigate("forgot-password")}
-          >
-            Mot de passe oublié ?
-          </button>
+          <button type="button" className="auth-form__forgot" onClick={() => navigate("forgot-password")}>Mot de passe oublié ?</button>
         </div>
         <div className="auth-form__input-wrap">
-          <input
-            className="auth-form__input"
-            type={showPassword ? "text" : "password"}
-            placeholder="••••••••"
-            value={form.password}
-            onChange={set("password")}
-            autoComplete="current-password"
-          />
-          <button
-            type="button"
-            className="auth-form__eye"
-            onClick={() => setShowPassword((v) => !v)}
-            aria-label={showPassword ? "Masquer" : "Afficher"}
-          >
-            {showPassword ? "🙈" : "👁"}
-          </button>
+          <input className="auth-form__input" type={showPassword ? "text" : "password"} placeholder="••••••••" value={form.password} onChange={set("password")} autoComplete="current-password" />
+          <button type="button" className="auth-form__eye" onClick={() => setShowPassword((v) => !v)}>{showPassword ? "🙈" : "👁"}</button>
         </div>
         {errors.password && <p className="auth-form__error">{errors.password}</p>}
       </div>
 
-      {/* Se souvenir */}
       <label className="auth-form__checkbox">
-        <input
-          type="checkbox"
-          checked={form.remember}
-          onChange={set("remember")}
-        />
+        <input type="checkbox" checked={form.remember} onChange={set("remember")} />
         <span className="auth-form__checkbox-custom" />
         <span className="auth-form__checkbox-label">Se souvenir de moi</span>
       </label>
 
-      {/* Submit */}
-      <button
-        type="submit"
-        className={`auth-form__submit ${loading ? "auth-form__submit--loading" : ""}`}
-        disabled={loading}
-      >
+      <button type="submit" className={`auth-form__submit ${loading ? "auth-form__submit--loading" : ""}`} disabled={loading}>
         {loading ? "Connexion en cours..." : "Se connecter"}
       </button>
 
       <p className="auth-form__switch">
         Pas encore de compte ?{" "}
-        <button type="button" className="auth-form__switch-link" onClick={() => onSwitchTab("register")}>
-          Créer un compte
-        </button>
+        <button type="button" className="auth-form__switch-link" onClick={() => onSwitchTab("register")}>Créer un compte</button>
       </p>
     </form>
   );

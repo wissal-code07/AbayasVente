@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import HomePage from "./pages/HomePage";
@@ -10,22 +11,46 @@ import PromotionsPage from "./pages/PromotionsPage";
 import AboutPage from "./pages/AboutPage";
 import AccountPage from "./pages/AccountPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import CartSidebar from "./components/cart/CartSidebar";
 import AdminPage from "./pages/AdminPage";
+import CartSidebar from "./components/cart/CartSidebar";
 import "./styles/globals.css";
 
-export default function App() {
+function AppContent() {
+  const { user, setUser, logout: authLogout } = useAuth();
+
   const [page, setPage]                     = useState("home");
   const [currentProduct, setCurrentProduct] = useState(null);
   const [authTab, setAuthTab]               = useState("login");
   const [cart, setCart]                     = useState([]);
   const [cartOpen, setCartOpen]             = useState(false);
 
+  // Charger le panier depuis localStorage au démarrage
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      try {
+        setCart(JSON.parse(savedCart));
+      } catch (e) {}
+    }
+  }, []);
+
+  // Sauvegarder le panier dans localStorage à chaque modification
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  // Vider le panier quand l'utilisateur se déconnecte
+  useEffect(() => {
+    if (!user) {
+      setCart([]);
+      localStorage.removeItem("cart");
+    }
+  }, [user]);
+
   const handleAddToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find(
-        (item) =>
-          item.id === product.id &&
+        (item) => item.id === product.id &&
           item.selectedSize  === product.selectedSize &&
           item.selectedColor === product.selectedColor
       );
@@ -43,15 +68,16 @@ export default function App() {
     setCartOpen(true);
   };
 
-  const handleRemoveFromCart = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
-  };
-
+  const handleRemoveFromCart = (index) => setCart((prev) => prev.filter((_, i) => i !== index));
   const handleUpdateQuantity = (index, quantity) => {
     if (quantity < 1) return;
-    setCart((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, quantity } : item))
-    );
+    setCart((prev) => prev.map((item, i) => (i === index ? { ...item, quantity } : item)));
+  };
+
+  // Fonction pour vider le panier après commande réussie
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
   };
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -62,34 +88,37 @@ export default function App() {
     else {
       setPage(destination);
       if (destination === "product" && data) setCurrentProduct(data);
-      // Ferme le panier si on va au checkout
       if (destination === "checkout") setCartOpen(false);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleLoginSuccess = (userData) => {
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    authLogout();
+    navigate("home");
+  };
+
   const renderPage = () => {
     switch (page) {
-      case "catalogue":   return <CataloguePage  onAddToCart={handleAddToCart} navigate={navigate} />;
-      case "product":     return <ProductPage     product={currentProduct} onAddToCart={handleAddToCart} navigate={navigate} />;
-      case "auth":        return <AuthPage        navigate={navigate} defaultTab={authTab} />;
-      case "nouveautes":  return <NouveautesPage  onAddToCart={handleAddToCart} navigate={navigate} />;
-      case "promotions":  return <PromotionsPage  onAddToCart={handleAddToCart} navigate={navigate} />;
-      case "about":       return <AboutPage       navigate={navigate} />;
-      case "account":     return <AccountPage     navigate={navigate} />;
-      case "checkout":    return <CheckoutPage    cart={cart} navigate={navigate} />;
-      case "admin":       return <AdminPage       navigate={navigate} />;
-      case "home":
-      default:            return <HomePage        onAddToCart={handleAddToCart} navigate={navigate} />;
+      case "catalogue":  return <CataloguePage  onAddToCart={handleAddToCart} navigate={navigate} />;
+      case "product":    return <ProductPage     product={currentProduct} onAddToCart={handleAddToCart} navigate={navigate} />;
+      case "auth":       return <AuthPage        navigate={navigate} defaultTab={authTab} onLoginSuccess={handleLoginSuccess} />;
+      case "nouveautes": return <NouveautesPage  onAddToCart={handleAddToCart} navigate={navigate} />;
+      case "promotions": return <PromotionsPage  onAddToCart={handleAddToCart} navigate={navigate} />;
+      case "about":      return <AboutPage       navigate={navigate} />;
+      case "account":    return <AccountPage     navigate={navigate} onLogout={handleLogout} />;
+      case "checkout":   return <CheckoutPage    cart={cart} navigate={navigate} onOrderSuccess={clearCart} />;
+      case "admin":      return <AdminPage       navigate={navigate} />;
+      default:           return <HomePage        onAddToCart={handleAddToCart} navigate={navigate} />;
     }
   };
 
-  // Checkout et auth ont leur propre layout sans Navbar/Footer
-  const isFullPage = page === "checkout" || page === "admin"; // Admin aussi pour le moment, à revoir si on ajoute d'autres pages admin
-
-  if (isFullPage) {
-    return renderPage();
-  }
+  const isFullPage = page === "checkout" || page === "admin";
+  if (isFullPage) return renderPage();
 
   return (
     <>
@@ -98,6 +127,8 @@ export default function App() {
         navigate={navigate}
         currentPage={page}
         onCartOpen={() => setCartOpen(true)}
+        user={user}
+        onLogout={handleLogout}
       />
       <main>{renderPage()}</main>
       <Footer navigate={navigate} />
@@ -110,5 +141,13 @@ export default function App() {
         navigate={navigate}
       />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }

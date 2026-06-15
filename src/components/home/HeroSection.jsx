@@ -1,5 +1,6 @@
 import { heroStats } from "../../data/mockData";
 import "./HeroSection.css";
+import heroImage from "../../assets/Abaya.png";
 
 export default function HeroSection() {
   return (
@@ -7,7 +8,7 @@ export default function HeroSection() {
       {/* Background layers */}
       <div className="hero__bg" />
       <div className="hero__pattern" />
-      <div className="hero__ornament" />
+      <div className="hero__ornament"><img src={heroImage} alt="Abaya élégante" className="hero__ornament-img" /></div>
 
       {/* Main content */}
       <div className="hero__content">

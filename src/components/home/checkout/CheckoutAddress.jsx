@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { mockAddresses } from "../../data/accountData";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../../context/AuthContext";
+import { getAddresses } from "../../../services/authService";
 import "./CheckoutAddress.css";
 
 const WILAYAS = [
@@ -9,14 +10,45 @@ const WILAYAS = [
 ];
 
 export default function CheckoutAddress({ onNext, savedData }) {
-  const [mode, setMode]           = useState("saved"); // "saved" | "new"
-  const [selectedId, setSelectedId] = useState(mockAddresses.find(a => a.default)?.id || mockAddresses[0]?.id);
-  const [form, setForm]           = useState(savedData?.form || {
-    firstName: "", lastName: "", address: "", city: "", wilaya: "", phone: "",
+  const { user } = useAuth();
+  const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [mode, setMode] = useState("saved");
+  const [selectedId, setSelectedId] = useState(null);
+  const [form, setForm] = useState(savedData?.form || {
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    address: "",
+    city: "",
+    wilaya: "",
+    phone: user?.phone || "",
   });
-  const [errors, setErrors]       = useState({});
+  const [errors, setErrors] = useState({});
 
-  const set = (field) => (e) => {
+  useEffect(() => {
+    const loadAddresses = async () => {
+      try {
+        const data = await getAddresses();
+        const addressesArray = Array.isArray(data) ? data : data.results || [];
+        setAddresses(addressesArray);
+        if (addressesArray.length > 0) {
+          setMode("saved");
+          const defaultAddr = addressesArray.find(a => a.default);
+          setSelectedId(defaultAddr?.id || addressesArray[0]?.id);
+        } else {
+          setMode("new");
+        }
+      } catch (err) {
+        console.error("Erreur chargement adresses:", err);
+        setMode("new");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadAddresses();
+  }, []);
+
+  const setField = (field) => (e) => {
     setForm(prev => ({ ...prev, [field]: e.target.value }));
     setErrors(prev => ({ ...prev, [field]: "" }));
   };
@@ -34,14 +66,20 @@ export default function CheckoutAddress({ onNext, savedData }) {
 
   const handleNext = () => {
     if (mode === "saved") {
-      const addr = mockAddresses.find(a => a.id === selectedId);
-      onNext({ mode: "saved", address: addr });
+      const addr = addresses.find(a => a.id === selectedId);
+      if (addr) onNext({ mode: "saved", address: addr });
     } else {
       const errs = validate();
-      if (Object.keys(errs).length) { setErrors(errs); return; }
+      if (Object.keys(errs).length) {
+        setErrors(errs);
+        return;
+      }
+      // Transmet les données sans appeler l'API (CheckoutPage s'en chargera)
       onNext({ mode: "new", form });
     }
   };
+
+  if (loading) return <div className="checkout-address">Chargement...</div>;
 
   return (
     <div className="checkout-address">
@@ -50,8 +88,7 @@ export default function CheckoutAddress({ onNext, savedData }) {
         Adresse de livraison
       </h2>
 
-      {/* Toggle saved / new */}
-      {mockAddresses.length > 0 && (
+      {addresses.length > 0 && (
         <div className="checkout-address__tabs">
           <button
             className={`checkout-address__tab ${mode === "saved" ? "checkout-address__tab--active" : ""}`}
@@ -68,10 +105,9 @@ export default function CheckoutAddress({ onNext, savedData }) {
         </div>
       )}
 
-      {/* Saved addresses */}
-      {mode === "saved" && (
+      {mode === "saved" && addresses.length > 0 && (
         <div className="checkout-address__saved">
-          {mockAddresses.map((addr) => (
+          {addresses.map((addr) => (
             <label
               key={addr.id}
               className={`checkout-address__card ${selectedId === addr.id ? "checkout-address__card--selected" : ""}`}
@@ -99,37 +135,36 @@ export default function CheckoutAddress({ onNext, savedData }) {
         </div>
       )}
 
-      {/* New address form */}
       {mode === "new" && (
         <div className="checkout-address__form">
           <div className="checkout-address__row">
             <div className={`checkout-address__field ${errors.firstName ? "error" : ""}`}>
               <label className="checkout-address__label">Prénom *</label>
-              <input className="checkout-address__input" type="text" value={form.firstName} onChange={set("firstName")} />
+              <input className="checkout-address__input" type="text" value={form.firstName} onChange={setField("firstName")} />
               {errors.firstName && <p className="checkout-address__error">{errors.firstName}</p>}
             </div>
             <div className={`checkout-address__field ${errors.lastName ? "error" : ""}`}>
               <label className="checkout-address__label">Nom *</label>
-              <input className="checkout-address__input" type="text" value={form.lastName} onChange={set("lastName")} />
+              <input className="checkout-address__input" type="text" value={form.lastName} onChange={setField("lastName")} />
               {errors.lastName && <p className="checkout-address__error">{errors.lastName}</p>}
             </div>
           </div>
 
           <div className={`checkout-address__field ${errors.address ? "error" : ""}`}>
             <label className="checkout-address__label">Adresse *</label>
-            <input className="checkout-address__input" type="text" placeholder="N° Rue, Quartier" value={form.address} onChange={set("address")} />
+            <input className="checkout-address__input" type="text" placeholder="N° Rue, Quartier" value={form.address} onChange={setField("address")} />
             {errors.address && <p className="checkout-address__error">{errors.address}</p>}
           </div>
 
           <div className="checkout-address__row">
             <div className={`checkout-address__field ${errors.city ? "error" : ""}`}>
               <label className="checkout-address__label">Ville *</label>
-              <input className="checkout-address__input" type="text" value={form.city} onChange={set("city")} />
+              <input className="checkout-address__input" type="text" value={form.city} onChange={setField("city")} />
               {errors.city && <p className="checkout-address__error">{errors.city}</p>}
             </div>
             <div className={`checkout-address__field ${errors.wilaya ? "error" : ""}`}>
               <label className="checkout-address__label">Wilaya *</label>
-              <select className="checkout-address__input checkout-address__select" value={form.wilaya} onChange={set("wilaya")}>
+              <select className="checkout-address__input checkout-address__select" value={form.wilaya} onChange={setField("wilaya")}>
                 <option value="">Sélectionner...</option>
                 {WILAYAS.map(w => <option key={w} value={w}>{w}</option>)}
               </select>
@@ -139,7 +174,7 @@ export default function CheckoutAddress({ onNext, savedData }) {
 
           <div className={`checkout-address__field ${errors.phone ? "error" : ""}`}>
             <label className="checkout-address__label">Téléphone *</label>
-            <input className="checkout-address__input" type="tel" placeholder="+213 555 000 000" value={form.phone} onChange={set("phone")} />
+            <input className="checkout-address__input" type="tel" placeholder="+213 555 000 000" value={form.phone} onChange={setField("phone")} />
             {errors.phone && <p className="checkout-address__error">{errors.phone}</p>}
           </div>
         </div>

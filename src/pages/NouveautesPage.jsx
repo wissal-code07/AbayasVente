@@ -1,19 +1,26 @@
-import { useMemo } from "react";
-import { catalogueProducts } from "../data/catalogueData";
+// src/pages/NouveautesPage.jsx
+import { useState, useEffect } from "react";
+import { getProducts } from "../services/productService";
+import { useAuth } from "../context/AuthContext";
 import CatalogueCard from "../components/catalogue/CatalogueCard";
 import "./NouveautesPage.css";
 
 export default function NouveautesPage({ onAddToCart, navigate }) {
-  const newProducts = useMemo(
-    () => catalogueProducts.filter((p) => p.badge === "new"),
-    []
-  );
+  const { isAuthenticated } = useAuth();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [error, setError]       = useState(null);
 
-  const formatPrice = (p) => new Intl.NumberFormat("fr-DZ").format(p) + " DA";
+  useEffect(() => {
+    setLoading(true);
+    getProducts({ badge: "new", ordering: "-created_at" })
+      .then(data => setProducts(data.results || []))
+      .catch(() => setError("Erreur lors du chargement des nouveautés."))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="nouveautes-page">
-      {/* Hero */}
       <div className="nouveautes-page__hero">
         <span className="nouveautes-page__tag">Vient d'arriver</span>
         <h1 className="nouveautes-page__title">Les <em>Nouveautés</em></h1>
@@ -24,38 +31,57 @@ export default function NouveautesPage({ onAddToCart, navigate }) {
         <div className="nouveautes-page__line" />
       </div>
 
-      {/* Bandeau info */}
       <div className="nouveautes-page__banner">
         <span>✦ Nouvelle livraison chaque semaine</span>
         <span>✦ Quantités limitées</span>
         <span>✦ Livraison gratuite dès 5 000 DA</span>
       </div>
 
-      {/* Grille */}
       <div className="nouveautes-page__content">
-        <p className="nouveautes-page__count">
-          <span>{newProducts.length}</span> nouveaux modèles
-        </p>
+        {loading && (
+          <div className="nouveautes-page__loading">
+            <div className="catalogue-page__spinner" />
+            <p>Chargement des nouveautés...</p>
+          </div>
+        )}
 
-        {newProducts.length === 0 ? (
+        {error && !loading && (
           <div className="nouveautes-page__empty">
-            <p>Aucune nouveauté pour le moment. Revenez bientôt !</p>
+            <p>{error}</p>
             <button className="btn btn--outline" onClick={() => navigate("catalogue")}>
               Voir toute la collection
             </button>
           </div>
-        ) : (
-          <div className="nouveautes-page__grid">
-            {newProducts.map((product) => (
-              <CatalogueCard
-                key={product.id}
-                product={product}
-                viewMode="grid"
-                onAddToCart={onAddToCart}
-                navigate={navigate}
-              />
-            ))}
-          </div>
+        )}
+
+        {!loading && !error && (
+          <>
+            <p className="nouveautes-page__count">
+              <span>{products.length}</span> nouveau{products.length > 1 ? "x" : ""} modèle{products.length > 1 ? "s" : ""}
+            </p>
+
+            {products.length === 0 ? (
+              <div className="nouveautes-page__empty">
+                <p>Aucune nouveauté pour le moment. Revenez bientôt !</p>
+                <button className="btn btn--outline" onClick={() => navigate("catalogue")}>
+                  Voir toute la collection
+                </button>
+              </div>
+            ) : (
+              <div className="nouveautes-page__grid">
+                {products.map((product) => (
+                  <CatalogueCard
+                    key={product.id}
+                    product={product}
+                    viewMode="grid"
+                    onAddToCart={onAddToCart}
+                    navigate={navigate}
+                    isAuthenticated={isAuthenticated}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

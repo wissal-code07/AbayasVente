@@ -3,7 +3,6 @@ import MarqueeBar from "../components/home/MarqueeBar";
 import FeaturedProducts from "../components/home/FeaturedProducts";
 import PromotionsSection from "../components/home/PromotionsSection";
 
-// Reçoit onAddToCart ET navigate depuis App.jsx
 export default function HomePage({ onAddToCart, navigate }) {
   return (
     <>

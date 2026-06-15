@@ -16,22 +16,28 @@ export default function ProductCard({ product, onAddToCart, navigate }) {
     >
       {/* Image */}
       <div className="product-card__img">
-        <AbayaSilhouette
-          id={id}
-          gradientFrom={gradFrom}
-          gradientTo={gradTo}
-          accentColor={accent}
-        />
+        {primary_image ? (
+          <img
+            src={primary_image}
+            alt={name}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          /*Placeholder si pas d'image*/
+          <div className="product-card__img-placeholder">
+            <span className="product-card__placeholder"></span>
+          </div>
+        )}
         {badge && (
           <span className={`product-card__badge product-card__badge--${badge}`}>
-            {badgeLabel}
+            {badge === "new" ? "Nouveau" : `${-discount_percent}%`}
           </span>
         )}
       </div>
 
       {/* Infos */}
       <div className="product-card__info">
-        <p className="product-card__category">{category}</p>
+        <p className="product-card__category">{category?.name || category}</p>
         <h3 className="product-card__name">{name}</h3>
 
         <div className="product-card__footer">

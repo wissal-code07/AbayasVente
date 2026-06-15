@@ -38,3 +38,16 @@
   .promos-page__content { padding: 20px 16px; }
   .promos-page__grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
 }
+/* Ajoutez ces styles à la fin de PromotionsPage.css */
+
+.promos-page__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 1px;
+}

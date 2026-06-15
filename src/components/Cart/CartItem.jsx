@@ -4,6 +4,11 @@ import "./CartItem.css";
 export default function CartItem({ item, index, onRemove, onUpdateQuantity }) {
   const formatPrice = (p) => new Intl.NumberFormat("fr-DZ").format(p) + " DA";
 
+  // Extraction du nom de catégorie (si c'est un objet)
+  const categoryName = typeof item.category === 'object' 
+    ? item.category?.name 
+    : item.category;
+
   return (
     <div className="cart-item">
       {/* Thumbnail */}
@@ -23,7 +28,7 @@ export default function CartItem({ item, index, onRemove, onUpdateQuantity }) {
       <div className="cart-item__info">
         <div className="cart-item__top">
           <div>
-            <p className="cart-item__category">{item.category}</p>
+            <p className="cart-item__category">{categoryName}</p> {/* ← corrigé */}
             <h4 className="cart-item__name">{item.name}</h4>
           </div>
           <button
