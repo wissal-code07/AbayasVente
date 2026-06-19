@@ -1,66 +1,470 @@
-.admin-orders { display: flex; flex-direction: column; gap: 20px; }
+/* AdminOrders.css */
 
-.admin-back-btn {
-  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--text-muted); background: none; border: none;
-  cursor: pointer; transition: color 0.2s; padding: 0; width: fit-content;
+.admin-orders {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
-.admin-back-btn:hover { color: var(--gold); }
+
+/* ── En-tête ── */
+.admin-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-section__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text);
+}
+
+.admin-section__date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Contrôles (recherche + filtres) ── */
+.admin-products__controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 4px 0 8px;
+}
+
+.admin-search {
+  flex: 1;
+  min-width: 200px;
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.admin-search:focus {
+  border-color: var(--gold);
+}
+
+.admin-filter-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.admin-filter-tab {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-filter-tab:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.admin-filter-tab.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+/* ── Tableau des commandes ── */
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  background: var(--dark2);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.admin-table thead {
+  background: var(--dark3);
+}
+
+.admin-table th {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 400;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(201, 168, 76, 0.03);
+}
+
+.admin-table__id {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  color: var(--gold);
+}
+
+.admin-table__muted {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.admin-table__price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.admin-table__badge {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.admin-table__btn {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.admin-table__btn:hover {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+/* ── Pagination ── */
+.admin-pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.admin-pagination button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-pagination button:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.admin-pagination button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.admin-pagination span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Bouton retour ── */
+.admin-back-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px 0;
+}
+
+.admin-back-btn:hover {
+  color: var(--gold);
+}
+
+/* ============================================= */
+/* ── DÉTAIL D'UNE COMMANDE ── */
+/* ============================================= */
 
 .admin-orders__detail {
   border: 1px solid var(--border);
   background: var(--dark2);
+  padding: 24px 28px;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 24px;
 }
 
 .admin-orders__detail-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 24px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
 }
 
+.admin-orders__detail-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--text);
+  margin: 0;
+}
+
+.admin-orders__detail-header p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+.admin-orders__detail-status .admin-table__badge {
+  font-size: 10px;
+  padding: 4px 16px;
+  background: rgba(201,168,76,0.1);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+}
+
+/* Grille d'informations client / total / articles */
 .admin-orders__detail-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
+  gap: 20px;
+  background: var(--dark3);
+  padding: 16px 20px;
+  border-radius: 6px;
 }
 
 .admin-orders__detail-block {
-  padding: 20px 24px;
-  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-.admin-orders__detail-block:last-child { border-right: none; }
 
+.admin-form__label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.admin-orders__detail-block p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.admin-orders__detail-block .admin-table__price {
+  font-size: 18px;
+}
+
+/* Mise à jour du statut */
 .admin-orders__status-update {
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   border-top: 1px solid var(--border);
+  padding-top: 20px;
 }
 
-.admin-orders__status-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.admin-orders__status-update .admin-form__label {
+  margin-bottom: 4px;
+}
+
+.admin-orders__status-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 .admin-orders__status-btn {
-  padding: 8px 16px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
   border: 1px solid var(--border);
+  border-radius: 4px;
   background: transparent;
   color: var(--text-muted);
-  font-family: 'Jost', sans-serif;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: capitalize;
   cursor: pointer;
   transition: all 0.2s;
 }
-.admin-orders__status-btn:hover { border-color: var(--gold); color: var(--gold); }
-.admin-orders__status-btn--active { font-weight: 500; }
+
+.admin-orders__status-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.admin-orders__status-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.08);
+}
+
+/* Articles dans le détail (si affichés) */
+.admin-orders__detail-items {
+  margin-top: 4px;
+}
+
+.admin-orders__detail-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-orders__detail-item:last-child {
+  border-bottom: none;
+}
+
+.admin-orders__detail-item-info {
+  flex: 1;
+}
+
+.admin-orders__detail-item-name {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.admin-orders__detail-item-opts {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.admin-orders__detail-item-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* Résumé total */
+.admin-orders__detail-summary {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-orders__detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.admin-orders__detail-divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.admin-orders__detail-row--total {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--text);
+}
+
+.admin-orders__detail-row--total span:last-child {
+  color: var(--gold);
+}
+
+/* Bouton annuler / reorder */
+.acc-orders__reorder {
+  margin-top: 12px;
+  align-self: flex-start;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .admin-orders__detail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 @media (max-width: 768px) {
-  .admin-orders__detail-grid { grid-template-columns: 1fr; }
-  .admin-orders__detail-block { border-right: none; border-bottom: 1px solid var(--border); }
-  .admin-orders__detail-block:last-child { border-bottom: none; }
+  .admin-orders__detail {
+    padding: 16px;
+  }
+  .admin-orders__detail-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .admin-orders__detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .admin-orders__status-btns {
+    flex-wrap: wrap;
+  }
+  .admin-products__controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-orders__detail {
+    padding: 12px;
+  }
+  .admin-orders__detail-header h2 {
+    font-size: 20px;
+  }
+  .admin-orders__detail-row--total {
+    font-size: 18px;
+  }
+  .admin-orders__detail-item {
+    flex-wrap: wrap;
+  }
+  .admin-table th,
+  .admin-table td {
+    font-size: 11px;
+    padding: 8px 8px;
+  }
 }

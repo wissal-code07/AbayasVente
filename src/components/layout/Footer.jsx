@@ -26,9 +26,11 @@ export default function Footer({ navigate }) {
                     onClick={(e) => {
                       e.preventDefault();
                       if (link === "Accueil")       navigate("home");
-                      else if (link === "Collection" ||
-                               link === "Nouveautés" ||
-                               link === "Promotions") navigate("catalogue");
+                      else if (link === "Collection") navigate("collection");
+                      else if (
+                               link === "Nouveautés") navigate("nouveautes");
+                      else if (
+                               link === "Promotions") navigate("promotions");
                       else if (link === "Mes commandes" ||
                                link === "Mes adresses" ||
                                link === "Mon profil")  navigate("account");
@@ -47,7 +49,7 @@ export default function Footer({ navigate }) {
 
       <div className="footer__bottom">
         <p className="footer__copy">
-          © 2025 Abayas Vente — Tous droits réservés
+          © 2026 Abayas Vente — Tous droits réservés
         </p>
         <div className="footer__socials">
           <a href="#" className="footer__social">f</a>

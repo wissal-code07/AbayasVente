@@ -3,11 +3,11 @@ import { login } from "../../services/authService";
 import "./AuthForms.css";
 
 export default function LoginForm({ onSwitchTab, navigate, onLoginSuccess }) {
-  const [form, setForm]             = useState({ email: "", password: "", remember: false });
+  const [form, setForm]                 = useState({ email: "", password: "", remember: false });
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors]         = useState({});
-  const [loading, setLoading]       = useState(false);
-  const [apiError, setApiError]     = useState("");
+  const [errors, setErrors]             = useState({});
+  const [loading, setLoading]           = useState(false);
+  const [apiError, setApiError]         = useState("");
 
   const validate = () => {
     const e = {};
@@ -25,8 +25,7 @@ export default function LoginForm({ onSwitchTab, navigate, onLoginSuccess }) {
     setApiError("");
     try {
       const user = await login(form.email, form.password);
-      onLoginSuccess(user);
-      navigate(user.isStaff ? "admin" : "account");
+      onLoginSuccess(user); // ← App.jsx gère la redirection selon is_staff
     } catch (err) {
       setApiError(err.response?.data?.detail || "Email ou mot de passe incorrect.");
     } finally {
@@ -52,18 +51,36 @@ export default function LoginForm({ onSwitchTab, navigate, onLoginSuccess }) {
 
       <div className={`auth-form__field ${errors.email ? "auth-form__field--error" : ""}`}>
         <label className="auth-form__label">Adresse email</label>
-        <input className="auth-form__input" type="email" placeholder="votre@email.com" value={form.email} onChange={set("email")} autoComplete="email" />
+        <input
+          className="auth-form__input"
+          type="email"
+          placeholder="votre@email.com"
+          value={form.email}
+          onChange={set("email")}
+          autoComplete="email"
+        />
         {errors.email && <p className="auth-form__error">{errors.email}</p>}
       </div>
 
       <div className={`auth-form__field ${errors.password ? "auth-form__field--error" : ""}`}>
         <div className="auth-form__label-row">
           <label className="auth-form__label">Mot de passe</label>
-          <button type="button" className="auth-form__forgot" onClick={() => navigate("forgot-password")}>Mot de passe oublié ?</button>
+          <button type="button" className="auth-form__forgot" onClick={() => navigate("forgot-password")}>
+            Mot de passe oublié ?
+          </button>
         </div>
         <div className="auth-form__input-wrap">
-          <input className="auth-form__input" type={showPassword ? "text" : "password"} placeholder="••••••••" value={form.password} onChange={set("password")} autoComplete="current-password" />
-          <button type="button" className="auth-form__eye" onClick={() => setShowPassword((v) => !v)}>{showPassword ? "🙈" : "👁"}</button>
+          <input
+            className="auth-form__input"
+            type={showPassword ? "text" : "password"}
+            placeholder="••••••••"
+            value={form.password}
+            onChange={set("password")}
+            autoComplete="current-password"
+          />
+          <button type="button" className="auth-form__eye" onClick={() => setShowPassword((v) => !v)}>
+            {showPassword ? "🙈" : "👁"}
+          </button>
         </div>
         {errors.password && <p className="auth-form__error">{errors.password}</p>}
       </div>
@@ -74,13 +91,19 @@ export default function LoginForm({ onSwitchTab, navigate, onLoginSuccess }) {
         <span className="auth-form__checkbox-label">Se souvenir de moi</span>
       </label>
 
-      <button type="submit" className={`auth-form__submit ${loading ? "auth-form__submit--loading" : ""}`} disabled={loading}>
+      <button
+        type="submit"
+        className={`auth-form__submit ${loading ? "auth-form__submit--loading" : ""}`}
+        disabled={loading}
+      >
         {loading ? "Connexion en cours..." : "Se connecter"}
       </button>
 
       <p className="auth-form__switch">
         Pas encore de compte ?{" "}
-        <button type="button" className="auth-form__switch-link" onClick={() => onSwitchTab("register")}>Créer un compte</button>
+        <button type="button" className="auth-form__switch-link" onClick={() => onSwitchTab("register")}>
+          Créer un compte
+        </button>
       </p>
     </form>
   );

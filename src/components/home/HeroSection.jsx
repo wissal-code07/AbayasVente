@@ -12,7 +12,7 @@ export default function HeroSection() {
 
       {/* Main content */}
       <div className="hero__content">
-        <div className="hero__tag">Collection Exclusive 2025</div>
+        <div className="hero__tag">Collection Exclusive 2026</div>
 
         <h1 className="hero__title">
           L'Art de<br />

@@ -7,9 +7,10 @@ const MENU_ITEMS = [
   { key: "profile",    icon: "◯", label: "Mon profil"      },
 ];
 
-export default function AccountSidebar({ activeSection, setActiveSection, user, navigate }) {
+export default function AccountSidebar({ activeSection, setActiveSection, user, navigate, onLogout }) {
   return (
     <aside className="account-sidebar">
+
       {/* Avatar */}
       <div className="account-sidebar__user">
         <div className="account-sidebar__avatar">{user.avatar}</div>
@@ -34,15 +35,16 @@ export default function AccountSidebar({ activeSection, setActiveSection, user, 
         ))}
       </nav>
 
-      {/* Footer actions */}
+      {/* Footer */}
       <div className="account-sidebar__footer">
         <button
           className="account-sidebar__logout"
-          onClick={() => navigate("home")}
+          onClick={onLogout}
         >
           ← Se déconnecter
         </button>
       </div>
+
     </aside>
   );
 }

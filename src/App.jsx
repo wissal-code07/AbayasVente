@@ -24,22 +24,17 @@ function AppContent() {
   const [cart, setCart]                     = useState([]);
   const [cartOpen, setCartOpen]             = useState(false);
 
-  // Charger le panier depuis localStorage au démarrage
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
-      try {
-        setCart(JSON.parse(savedCart));
-      } catch (e) {}
+      try { setCart(JSON.parse(savedCart)); } catch (e) {}
     }
   }, []);
 
-  // Sauvegarder le panier dans localStorage à chaque modification
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // Vider le panier quand l'utilisateur se déconnecte
   useEffect(() => {
     if (!user) {
       setCart([]);
@@ -69,12 +64,12 @@ function AppContent() {
   };
 
   const handleRemoveFromCart = (index) => setCart((prev) => prev.filter((_, i) => i !== index));
+
   const handleUpdateQuantity = (index, quantity) => {
     if (quantity < 1) return;
     setCart((prev) => prev.map((item, i) => (i === index ? { ...item, quantity } : item)));
   };
 
-  // Fonction pour vider le panier après commande réussie
   const clearCart = () => {
     setCart([]);
     localStorage.removeItem("cart");
@@ -95,6 +90,11 @@ function AppContent() {
 
   const handleLoginSuccess = (userData) => {
     setUser(userData);
+    if (userData.is_staff) {
+      navigate("admin");    // ← admin → dashboard admin
+    } else {
+      navigate("account");  // ← client → espace personnel
+    }
   };
 
   const handleLogout = () => {

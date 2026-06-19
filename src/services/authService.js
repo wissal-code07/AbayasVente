@@ -29,7 +29,7 @@ export const login = async (email, password) => {
     email:      payload.email,
     firstName:  payload.first_name,
     lastName:   payload.last_name,
-    isStaff:    payload.is_staff,
+    is_staff:   payload.is_staff,   // ← corrigé
   };
   localStorage.setItem("user", JSON.stringify(user));
   return user;

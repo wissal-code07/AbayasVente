@@ -1,30 +1,50 @@
-import { useState } from "react";
-import { adminClients, STATUS_COLORS } from "../../data/adminData";
+import { useState, useEffect } from "react";
+import { getAdminClients, toggleClientStatus } from "../../services/adminService";
 import "./AdminClients.css";
 
 export default function AdminClients() {
-  const [clients, setClients] = useState(adminClients);
-  const [search, setSearch]   = useState("");
-  const [filter, setFilter]   = useState("tous");
+  const [clients, setClients]   = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [search, setSearch]     = useState("");
+  const [filter, setFilter]     = useState("tous");
+
+  const fetchClients = async () => {
+    setLoading(true);
+    try {
+      const params = {
+        search: search || undefined,
+        status: filter !== "tous" ? filter : undefined,
+      };
+      const data         = await getAdminClients(params);
+      const clientsArray = Array.isArray(data) ? data : data.results || [];
+      setClients(clientsArray);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchClients();
+  }, [search, filter]);
 
   const formatPrice = (p) => new Intl.NumberFormat("fr-DZ").format(p) + " DA";
 
-  const filtered = clients.filter((c) => {
-    const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
-                        c.email.toLowerCase().includes(search.toLowerCase());
-    const matchFilter = filter === "tous" || c.status === filter;
-    return matchSearch && matchFilter;
-  });
-
-  const handleToggle = (id) => {
-    setClients(prev => prev.map(c =>
-      c.id === id ? { ...c, status: c.status === "actif" ? "inactif" : "actif" } : c
-    ));
+  const handleToggle = async (client) => {
+    try {
+      await toggleClientStatus(client.id, !client.is_active);
+      fetchClients();
+    } catch {
+      alert("Erreur lors du changement de statut");
+    }
   };
 
+  if (loading && clients.length === 0) return <div className="admin-clients">Chargement...</div>;
+
   const totalClients  = clients.length;
-  const activeClients = clients.filter(c => c.status === "actif").length;
-  const totalRevenue  = clients.reduce((s, c) => s + c.total, 0);
+  const activeClients = clients.filter(c => c.is_active).length;
+  const totalRevenue  = clients.reduce((s, c) => s + (c.total_spent || 0), 0);
 
   return (
     <div className="admin-clients">
@@ -33,40 +53,39 @@ export default function AdminClients() {
         <p className="admin-section__date">{totalClients} clients inscrits</p>
       </div>
 
-      {/* Quick stats */}
       <div className="admin-clients__stats">
-        <div className="admin-clients__stat">
-          <span className="admin-clients__stat-val">{totalClients}</span>
-          <span className="admin-clients__stat-label">Total clients</span>
+        <div>
+          <span>{totalClients}</span>
+          <span>Total clients</span>
         </div>
-        <div className="admin-clients__stat">
-          <span className="admin-clients__stat-val" style={{color:"#44aa66"}}>{activeClients}</span>
-          <span className="admin-clients__stat-label">Clients actifs</span>
+        <div>
+          <span style={{ color: "#44aa66" }}>{activeClients}</span>
+          <span>Clients actifs</span>
         </div>
-        <div className="admin-clients__stat">
-          <span className="admin-clients__stat-val">{formatPrice(totalRevenue)}</span>
-          <span className="admin-clients__stat-label">CA total clients</span>
+        <div>
+          <span>{formatPrice(totalRevenue)}</span>
+          <span>CA total</span>
         </div>
-        <div className="admin-clients__stat">
-          <span className="admin-clients__stat-val">{formatPrice(Math.round(totalRevenue / totalClients))}</span>
-          <span className="admin-clients__stat-label">Valeur moyenne client</span>
+        <div>
+          <span>{formatPrice(Math.round(totalRevenue / (totalClients || 1)))}</span>
+          <span>Valeur moyenne</span>
         </div>
       </div>
 
-      {/* Controls */}
       <div className="admin-products__controls">
         <input
           className="admin-search"
           type="text"
-          placeholder="🔍  Rechercher un client..."
+          placeholder="🔍 Rechercher..."
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
         <div className="admin-filter-tabs">
-          {["tous","actif","inactif"].map(f => (
+          {["tous", "actif", "inactif"].map(f => (
             <button
               key={f}
-              className={`admin-filter-tab ${filter === f ? "admin-filter-tab--active" : ""}`}
+              type="button"
+              className={`admin-filter-tab ${filter === f ? "active" : ""}`}
               onClick={() => setFilter(f)}
             >
               {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -75,7 +94,6 @@ export default function AdminClients() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="admin-table-wrap">
         <table className="admin-table">
           <thead>
@@ -86,41 +104,36 @@ export default function AdminClients() {
               <th>Total dépensé</th>
               <th>Inscrit</th>
               <th>Statut</th>
-              <th>Actions</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            {filtered.map((client) => {
-              const s = STATUS_COLORS[client.status];
-              return (
-                <tr key={client.id}>
-                  <td>
-                    <div className="admin-clients__name">
-                      <div className="admin-clients__avatar">
-                        {client.name.split(" ").map(n => n[0]).join("").slice(0,2)}
-                      </div>
-                      <span>{client.name}</span>
-                    </div>
-                  </td>
-                  <td className="admin-table__muted">{client.email}</td>
-                  <td className="admin-table__muted">{client.orders} commande{client.orders > 1 ? "s" : ""}</td>
-                  <td className="admin-table__price">{formatPrice(client.total)}</td>
-                  <td className="admin-table__muted">{client.joined}</td>
-                  <td>
-                    <span className="admin-table__badge" style={{ color: s.color, background: s.bg }}>
-                      {client.status}
+            {clients.map(c => (
+              <tr key={c.id}>
+                <td>
+                  <div className="admin-clients__name">
+                    <span className="admin-clients__avatar">
+                      {c.first_name?.[0]}{c.last_name?.[0]}
                     </span>
-                  </td>
-                  <td>
-                    <div className="admin-table__actions">
-                      <button className="admin-table__btn admin-table__btn--toggle" onClick={() => handleToggle(client.id)}>
-                        {client.status === "actif" ? "Désactiver" : "Activer"}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+                    <strong>{c.first_name} {c.last_name}</strong>
+                  </div>
+                </td>
+                <td>{c.email}</td>
+                <td>{c.orders_count || 0}</td>
+                <td>{formatPrice(c.total_spent || 0)}</td>
+                <td>{new Date(c.created_at).toLocaleDateString()}</td>
+                <td>
+                  <span className={c.is_active ? "active" : "inactive"}>
+                    {c.is_active ? "Actif" : "Inactif"}
+                  </span>
+                </td>
+                <td>
+                  <button className="admin-table__btn" type="button" onClick={() => handleToggle(c)}>
+                    {c.is_active ? "Désactiver" : "Activer"}
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

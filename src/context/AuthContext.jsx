@@ -9,7 +9,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Charger l'utilisateur depuis localStorage au démarrage
     const storedUser = getCurrentUser();
     setUserState(storedUser);
     setLoading(false);
@@ -25,9 +24,13 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    logoutService(); // supprime tokens et user du localStorage
+    logoutService();
     setUserState(null);
   };
+
+  // ── Ne rien rendre tant que le user n'est pas chargé ──
+  // évite un flash de redirection au démarrage
+  if (loading) return null;
 
   return (
     <AuthContext.Provider value={{
@@ -36,6 +39,7 @@ export function AuthProvider({ children }) {
       logout,
       loading,
       isAuthenticated: !!user,
+      isStaff: !!user?.is_staff,   // ← ajout pour faciliter les guards
     }}>
       {children}
     </AuthContext.Provider>

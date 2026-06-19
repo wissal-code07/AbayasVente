@@ -204,3 +204,35 @@
   .admin-dashboard__stat { padding: 14px; }
   .admin-table th, .admin-table td { padding: 10px 10px; }
 }
+
+/* ── Admin Profile ── */
+.admin-profile { display: flex; flex-direction: column; gap: 24px; }
+
+.admin-profile__block {
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  overflow: hidden;
+}
+
+.admin-profile__form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-profile__success {
+  font-size: 13px;
+  color: #44aa66;
+  padding: 10px 14px;
+  background: rgba(68,170,102,0.08);
+  border: 1px solid rgba(68,170,102,0.2);
+}
+
+.admin-profile__error {
+  font-size: 13px;
+  color: #cc4444;
+  padding: 10px 14px;
+  background: rgba(204,68,68,0.08);
+  border: 1px solid rgba(204,68,68,0.2);
+}

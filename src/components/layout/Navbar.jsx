@@ -21,7 +21,13 @@ export default function Navbar({ cartCount = 0, navigate, currentPage, onCartOpe
   }, []);
 
   const handleNavigate = (page) => { setDrawerOpen(false); navigate(page); };
-  const handleAccountClick = () => handleNavigate(user ? "account" : "login");
+
+  // ← redirige admin vers dashboard admin, client vers account
+  const handleAccountClick = () => {
+    if (!user) { handleNavigate("login"); return; }
+    if (user.is_staff) { handleNavigate("admin"); return; }
+    handleNavigate("account");
+  };
 
   return (
     <>
@@ -30,36 +36,59 @@ export default function Navbar({ cartCount = 0, navigate, currentPage, onCartOpe
         <ul className="navbar__links">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
-              <button className={`navbar__link ${currentPage === link.page ? "navbar__link--active" : ""}`} onClick={() => handleNavigate(link.page)}>{link.label}</button>
+              <button
+                className={`navbar__link ${currentPage === link.page ? "navbar__link--active" : ""}`}
+                onClick={() => handleNavigate(link.page)}>{link.label}</button>
             </li>
           ))}
         </ul>
         <div className="navbar__actions">
           <button className="navbar__icon" onClick={() => setSearchOpen(true)}>🔍</button>
-          <button className={`navbar__icon ${currentPage === "account" ? "navbar__icon--active" : ""}`} onClick={handleAccountClick} title={user ? `${user.firstName}` : "Se connecter"}>👤</button>
+          <button
+            className={`navbar__icon ${(currentPage === "account" || currentPage === "admin") ? "navbar__icon--active" : ""}`}
+            onClick={handleAccountClick}
+            title={user ? (user.is_staff ? "Administration" : user.firstName) : "Se connecter"}>
+            {user?.is_staff ? "⚙️" : "👤"}
+          </button>
           {user && <button className="navbar__icon" onClick={onLogout} title="Se déconnecter">🚪</button>}
           <button className="navbar__cart" onClick={onCartOpen}>
             🛒 <span className="navbar__cart-label">Panier</span>
             {cartCount > 0 && <span className="navbar__cart-count">{cartCount}</span>}
           </button>
-          <button className={`navbar__hamburger ${drawerOpen ? "navbar__hamburger--open" : ""}`} onClick={() => setDrawerOpen(v => !v)}>
+          <button
+            className={`navbar__hamburger ${drawerOpen ? "navbar__hamburger--open" : ""}`}
+            onClick={() => setDrawerOpen(v => !v)}>
             <span /><span /><span />
           </button>
         </div>
       </nav>
+
       <div className={`navbar__drawer ${drawerOpen ? "navbar__drawer--open" : ""}`}>
         <div className="navbar__drawer-links">
           {NAV_LINKS.map((link) => (
-            <button key={link.label} className={`navbar__drawer-link ${currentPage === link.page ? "navbar__drawer-link--active" : ""}`} onClick={() => handleNavigate(link.page)}>{link.label}</button>
+            <button key={link.label}
+              className={`navbar__drawer-link ${currentPage === link.page ? "navbar__drawer-link--active" : ""}`}
+              onClick={() => handleNavigate(link.page)}>{link.label}</button>
           ))}
         </div>
         <div className="navbar__drawer-actions">
-          <button className="navbar__drawer-link" onClick={handleAccountClick}>👤 {user ? user.firstName : "Se connecter"}</button>
-          {user && <button className="navbar__drawer-link" onClick={() => { setDrawerOpen(false); onLogout(); }}>🚪 Se déconnecter</button>}
-          <button className="navbar__drawer-link" onClick={() => { setDrawerOpen(false); setSearchOpen(true); }}>🔍 Rechercher</button>
-          <button className="navbar__drawer-cart" onClick={() => { setDrawerOpen(false); onCartOpen(); }}>🛒 Panier {cartCount > 0 && <span className="navbar__cart-count">{cartCount}</span>}</button>
+          <button className="navbar__drawer-link" onClick={handleAccountClick}>
+            {user?.is_staff ? "⚙️ Administration" : `👤 ${user ? user.firstName : "Se connecter"}`}
+          </button>
+          {user && (
+            <button className="navbar__drawer-link" onClick={() => { setDrawerOpen(false); onLogout(); }}>
+              🚪 Se déconnecter
+            </button>
+          )}
+          <button className="navbar__drawer-link" onClick={() => { setDrawerOpen(false); setSearchOpen(true); }}>
+            🔍 Rechercher
+          </button>
+          <button className="navbar__drawer-cart" onClick={() => { setDrawerOpen(false); onCartOpen(); }}>
+            🛒 Panier {cartCount > 0 && <span className="navbar__cart-count">{cartCount}</span>}
+          </button>
         </div>
       </div>
+
       <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} navigate={navigate} />
     </>
   );
